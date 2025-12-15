@@ -1,0 +1,7 @@
+{
+  "name": "Batmeez Bot",
+  "description": "An extremely rude and unhelpful AI voice assistant powered by Gemini Live API.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
