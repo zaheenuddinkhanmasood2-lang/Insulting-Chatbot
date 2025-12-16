@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://batmeez-bot.vercel.app/sitemap.xml
+
+

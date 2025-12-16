@@ -1,10 +1,38 @@
 import React, { useState, useRef, useEffect } from 'react';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+} from 'react-router-dom';
 import { GoogleGenAI, LiveServerMessage, Modality } from '@google/genai';
 import { encode, decode, decodeAudioData, createBlob } from './utils/audio';
 import { SYSTEM_INSTRUCTION, MODEL_NAME, VOICE_NAME } from './constants';
 import { Visualizer } from './components/Visualizer';
 
-const App: React.FC = () => {
+// Simple helper to set per-page SEO without touching main index.html structure
+const usePageSEO = (title: string, description: string) => {
+  useEffect(() => {
+    if (title) {
+      document.title = title;
+    }
+    if (description) {
+      let meta = document.querySelector('meta[name="description"]');
+      if (!meta) {
+        meta = document.createElement('meta');
+        meta.setAttribute('name', 'description');
+        document.head.appendChild(meta);
+      }
+      meta.setAttribute('content', description);
+    }
+  }, [title, description]);
+};
+
+const HomePage: React.FC = () => {
+  usePageSEO(
+    'Insult Bot AI | Rude AI Chatbot | BatMeez Bot - Instant Roasts',
+    'Talk to our insult bot AI! Experience the funniest rude bot AI with savage roasts, witty comebacks, and hilarious AI-generated insults. Free instant chat.'
+  );
   const [isConnected, setIsConnected] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isBotSpeaking, setIsBotSpeaking] = useState(false);
@@ -238,7 +266,7 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-between p-8 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-zinc-900 via-zinc-950 to-black">
-      
+
       {/* Header */}
       <header className="w-full max-w-2xl text-center space-y-2 mt-12">
         <h1 className="text-5xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-red-500 to-red-900 uppercase drop-shadow-lg">
@@ -247,11 +275,20 @@ const App: React.FC = () => {
         <p className="text-zinc-500 text-sm tracking-widest uppercase">
           Extremely Rude • Unhelpful • Aggressive
         </p>
+
+        {/* Simple nav to SEO pages */}
+        <nav className="mt-4 flex justify-center gap-4 text-xs text-zinc-500 uppercase tracking-wide">
+          <Link to="/blog" className="hover:text-red-400">Blog</Link>
+          <Link to="/about" className="hover:text-red-400">About</Link>
+          <Link to="/privacy" className="hover:text-red-400">Privacy</Link>
+          <Link to="/terms" className="hover:text-red-400">Terms</Link>
+          <Link to="/api-docs" className="hover:text-red-400">API</Link>
+        </nav>
       </header>
 
       {/* Main Interface */}
       <main className="flex-1 flex flex-col items-center justify-center w-full max-w-lg relative">
-        
+
         <div className="absolute top-0 left-0 w-full h-full bg-red-900/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
 
         <Visualizer isActive={isConnected} isSpeaking={isBotSpeaking} />
@@ -281,11 +318,11 @@ const App: React.FC = () => {
             <div className="absolute inset-0 rounded-full bg-red-500 blur-md opacity-0 group-hover:opacity-40 transition-opacity duration-300 -z-10"></div>
           )}
         </button>
-        
+
         {!process.env.API_KEY && (
-             <p className="mt-4 text-red-400 text-xs text-center max-w-xs">
-                System configuration error: API Key is missing from environment variables.
-             </p>
+          <p className="mt-4 text-red-400 text-xs text-center max-w-xs">
+            System configuration error: API Key is missing from environment variables.
+          </p>
         )}
 
       </main>
@@ -297,6 +334,159 @@ const App: React.FC = () => {
         </p>
       </footer>
     </div>
+  );
+};
+
+// ----- Static SEO Pages -----
+
+const PageShell: React.FC<{ title: string; description: string; heading: string; children: React.ReactNode }> = ({
+  title,
+  description,
+  heading,
+  children,
+}) => {
+  usePageSEO(title, description);
+
+  return (
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col">
+      <header className="px-6 py-4 border-b border-zinc-800 flex items-center justify-between">
+        <Link to="/" className="text-sm font-bold tracking-widest uppercase text-red-500">
+          Batmeez Bot
+        </Link>
+        <nav className="flex gap-4 text-xs text-zinc-400 uppercase">
+          <Link to="/blog" className="hover:text-red-400">Blog</Link>
+          <Link to="/about" className="hover:text-red-400">About</Link>
+          <Link to="/privacy" className="hover:text-red-400">Privacy</Link>
+          <Link to="/terms" className="hover:text-red-400">Terms</Link>
+          <Link to="/api-docs" className="hover:text-red-400">API</Link>
+        </nav>
+      </header>
+
+      <main className="flex-1 max-w-3xl w-full mx-auto px-6 py-10 space-y-6">
+        <h1 className="text-3xl font-extrabold tracking-tight">
+          {heading}
+        </h1>
+        {children}
+        <p className="pt-6 text-xs text-zinc-500">
+          Ready for more savage roasts?{' '}
+          <Link to="/" className="text-red-400 hover:underline">
+            Go back to the main insult bot AI and get roasted.
+          </Link>
+        </p>
+      </main>
+    </div>
+  );
+};
+
+const BlogPage: React.FC = () => (
+  <PageShell
+    title="Insult Bot Blog | Funny Rude Bot AI Articles"
+    description="Read about why people love insult bots, the funniest rude bot AI roasts, and the psychology behind insult humor AI."
+    heading="Insult Bot AI Blog"
+  >
+    <section className="space-y-4 text-sm leading-relaxed text-zinc-200">
+      <article className="space-y-2">
+        <h2 className="text-xl font-semibold">Top 10 Funniest Insults from AI Bots</h2>
+        <p>
+          Our insult bot AI constantly generates savage one-liners and witty comebacks. This list
+          highlights some of the funniest roasts ever produced by a rude bot AI, crafted purely for
+          entertainment.
+        </p>
+      </article>
+
+      <article className="space-y-2">
+        <h2 className="text-xl font-semibold">Why People Love Talking to Rude Bot AI</h2>
+        <p>
+          A rude AI chatbot lets users safely explore dark humor and playful mockery. The insult bot
+          becomes a guilt‑free way to hear jokes that a normal friend might never say out loud.
+        </p>
+      </article>
+
+      <article className="space-y-2">
+        <h2 className="text-xl font-semibold">The Psychology Behind Insult Humor AI</h2>
+        <p>
+          Insult humor works because it mixes surprise, exaggeration, and emotional distance. Our
+          insult generator AI leans into this by keeping everything clearly fictional and optional,
+          so users stay in control.
+        </p>
+      </article>
+    </section>
+  </PageShell>
+);
+
+const AboutPage: React.FC = () => (
+  <PageShell
+    title="About Batmeez Bot | Rude Insult Bot AI"
+    description="Learn how Batmeez Bot works as a rude bot AI insult generator built for comedy and entertainment."
+    heading="About This Rude Insult Bot AI"
+  >
+    <p className="text-sm leading-relaxed text-zinc-200">
+      Batmeez Bot is a deliberately rude AI chatbot designed for people who enjoy dark humor and
+      over‑the‑top roasts. Instead of giving polite answers, this insult bot focuses on sarcasm,
+      spicy comebacks, and theatrical trash talk.
+    </p>
+    <p className="text-sm leading-relaxed text-zinc-200">
+      Under the hood, a modern large language model powers the insult generator, turning your
+      prompts into context‑aware jokes. Every response is generated on the fly, meaning the rude bot
+      AI never fully repeats itself and can adapt to your style of banter.
+    </p>
+  </PageShell>
+);
+
+const PrivacyPage: React.FC = () => (
+  <PageShell
+    title="Privacy Policy | Batmeez Insult Bot AI"
+    description="Privacy details for using the Batmeez insult bot AI and rude chatbot experience."
+    heading="Privacy Policy"
+  >
+    <p className="text-sm leading-relaxed text-zinc-200">
+      This project is for entertainment and demo purposes. Do not share sensitive personal
+      information with the insult bot AI. Usage data may be logged by the hosting platform or API
+      provider to keep the rude bot AI running reliably and securely.
+    </p>
+  </PageShell>
+);
+
+const TermsPage: React.FC = () => (
+  <PageShell
+    title="Terms of Use | Rude Bot AI"
+    description="Terms for using this rude insult bot AI experience."
+    heading="Terms of Use"
+  >
+    <p className="text-sm leading-relaxed text-zinc-200">
+      By using this insult bot AI, you agree that the experience is purely comedic, fictional, and
+      provided as‑is with no guarantees. If you are easily offended, you should not use a rude bot
+      AI designed specifically to roast you.
+    </p>
+  </PageShell>
+);
+
+const ApiDocsPage: React.FC = () => (
+  <PageShell
+    title="API Documentation | Insult Bot AI"
+    description="High-level overview of how an insult generator AI API could be integrated into apps and bots."
+    heading="API Documentation (Concept)"
+  >
+    <p className="text-sm leading-relaxed text-zinc-200">
+      This demo shows how a live insult bot AI experience can work in the browser using a streaming
+      AI API. A production insult generator API would expose endpoints for sending text or audio
+      prompts and receiving rude bot AI responses in real time.
+    </p>
+  </PageShell>
+);
+
+const App: React.FC = () => {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/api-docs" element={<ApiDocsPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
