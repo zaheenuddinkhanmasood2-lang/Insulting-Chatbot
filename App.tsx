@@ -311,7 +311,7 @@ const HomePage: React.FC = () => {
             disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none
           `}
         >
-          {isConnected ? 'DISCONNECT (BHAGO)' : 'START CONVERSATION'}
+          {isConnected ? 'DISCONNECT (NIKLO)' : 'START CONVERSATION'}
           
           {/* Hover glow effect */}
           {!isConnected && (
@@ -380,35 +380,59 @@ const PageShell: React.FC<{ title: string; description: string; heading: string;
 
 const BlogPage: React.FC = () => (
   <PageShell
-    title="Insult Bot Blog | Funny Rude Bot AI Articles"
-    description="Read about why people love insult bots, the funniest rude bot AI roasts, and the psychology behind insult humor AI."
+    title="Insult Bot Blog | Rude Bot AI Guides & Roast Ideas"
+    description="SEO-friendly guides about insult bot AI, roast ideas, internal linking, and how BatMeez Bot ranks on Google."
     heading="Insult Bot AI Blog"
   >
-    <section className="space-y-4 text-sm leading-relaxed text-zinc-200">
-      <article className="space-y-2">
-        <h2 className="text-xl font-semibold">Top 10 Funniest Insults from AI Bots</h2>
-        <p>
-          Our insult bot AI constantly generates savage one-liners and witty comebacks. This list
-          highlights some of the funniest roasts ever produced by a rude bot AI, crafted purely for
-          entertainment.
+    <section className="grid gap-5 md:grid-cols-2">
+      <article className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5 shadow-[0_8px_30px_rgba(0,0,0,0.35)] hover:border-red-500 hover:shadow-[0_12px_40px_rgba(239,68,68,0.25)] transition">
+        <p className="text-[11px] uppercase tracking-[0.2em] text-red-400">SEO • Rude Bot AI</p>
+        <h2 className="mt-2 text-lg font-semibold text-zinc-50">Insult Bot SEO Playbook</h2>
+        <p className="mt-2 text-sm text-zinc-300">
+          How BatMeez Bot ranks for “insult bot AI”, “rude bot chatbot”, and “funny insult generator”
+          using schema, fast Vercel hosting, and internal links to the homepage, About, and API pages.
         </p>
+        <ul className="mt-3 space-y-1 text-sm text-zinc-200 list-disc pl-4">
+          <li>WebPage + SoftwareApplication JSON-LD for clear entity signals</li>
+          <li>FAQPage schema to earn rich results on Q&A queries</li>
+          <li>Sitemap + robots.txt pointing Google to key URLs</li>
+          <li>Internal links back to <Link className="text-red-400 hover:underline" to="/">Home</Link>, <Link className="text-red-400 hover:underline" to="/about">About</Link>, <Link className="text-red-400 hover:underline" to="/api-docs">API</Link></li>
+        </ul>
+        <p className="mt-3 text-sm text-zinc-300">
+          Keep content fast, mobile-friendly, and keyword-natural—Google rewards speed and clarity.
+        </p>
+        <div className="mt-4 flex justify-between items-center text-sm text-red-300">
+          <span>5 min read • High intent</span>
+          <Link to="/" className="inline-flex items-center gap-1 text-red-400 hover:underline">
+            Try the bot ↗
+          </Link>
+        </div>
       </article>
 
-      <article className="space-y-2">
-        <h2 className="text-xl font-semibold">Why People Love Talking to Rude Bot AI</h2>
-        <p>
-          A rude AI chatbot lets users safely explore dark humor and playful mockery. The insult bot
-          becomes a guilt‑free way to hear jokes that a normal friend might never say out loud.
+      <article className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5 shadow-[0_8px_30px_rgba(0,0,0,0.35)] hover:border-red-500 hover:shadow-[0_12px_40px_rgba(239,68,68,0.25)] transition">
+        <p className="text-[11px] uppercase tracking-[0.2em] text-red-400">Content • Roast Ideas</p>
+        <h2 className="mt-2 text-lg font-semibold text-zinc-50">25 Funny, Safe Roast Lines</h2>
+        <p className="mt-2 text-sm text-zinc-300">
+          Click-worthy, share-friendly roast ideas in Hinglish and English that show off the insult bot
+          personality while keeping things playful and safe.
         </p>
-      </article>
-
-      <article className="space-y-2">
-        <h2 className="text-xl font-semibold">The Psychology Behind Insult Humor AI</h2>
-        <p>
-          Insult humor works because it mixes surprise, exaggeration, and emotional distance. Our
-          insult generator AI leans into this by keeping everything clearly fictional and optional,
-          so users stay in control.
+        <ul className="mt-3 space-y-1 text-sm text-zinc-200 list-disc pl-4">
+          <li>“Internet slow? Ya dimaag 2G pe atka hua hai?”</li>
+          <li>“Confidence download karle, warna main hi update bhej doon?”</li>
+          <li>“Brain ka RAM free kar—background mein drama chal raha hai.”</li>
+          <li>“Itni der kyun? Google pe khoye the ya life pe?”</li>
+          <li>“Teri battery low hai, aur tu power-saver mode mein bhi boring hai.”</li>
+        </ul>
+        <p className="mt-3 text-sm text-zinc-300">
+          Open the mic on the <Link className="text-red-400 hover:underline" to="/">Insult Bot AI homepage</Link> or
+          read the <Link className="text-red-400 hover:underline" to="/about">About page</Link> to learn how BatMeez crafts safe roasts.
         </p>
+        <div className="mt-4 flex justify-between items-center text-sm text-red-300">
+          <span>4 min read • Shareable</span>
+          <Link to="/" className="inline-flex items-center gap-1 text-red-400 hover:underline">
+            Get roasted ↗
+          </Link>
+        </div>
       </article>
     </section>
   </PageShell>
