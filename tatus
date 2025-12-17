@@ -1,0 +1,7 @@
+[33m53cef1e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Fix WebSocket errors and improve connection stability
+[33m6981654[m[33m ([m[1;32mbackup-before-removal-6981654[m[33m)[m Update domain to insultbot.vercel.app
+[33m050f56e[m Update App and index, add robots and sitemap files
+[33ma42593d[m chore: Update for Vercel deployment with correct email
+[33m33bf4f1[m Fix: Correct commit message and resolve deployment issues
+[33m50a71d9[m initial commit
+[33m1ac0c05[m initial commit
