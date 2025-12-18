@@ -3,39 +3,110 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="/favicon.png" />
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
+  <link rel="manifest" href="/manifest.json" />
 
   <!-- Primary SEO -->
   <title>InsultBot: Free Brutal Insult Generator AI & Roast Maker</title>
   <meta name="description"
     content="Destroy your friends with the #1 brutal insult generator AI(Batmeez Bot). Create savage roasts, witty comebacks, and soul-crushing burns instantly. Free, fast, and hilariously mean. Roast them now!" />
   <meta name="keywords"
-    content="insult bot, rude bot AI, AI insult generator, roasts chatbot, mean AI chatbot, funny insult bot" />
+    content="insult bot, rude bot AI, AI insult generator, roasts chatbot, mean AI chatbot, funny insult bot, AI roast generator, savage insults, brutal AI, insult generator free, Batmeez Bot" />
+  <meta name="author" content="InsultBot" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="language" content="English" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="rating" content="general" />
+  <meta name="theme-color" content="#18181b" />
+  <meta name="color-scheme" content="dark" />
 
-  <!-- Canonical -->
+  <!-- Canonical & Alternate -->
   <link rel="canonical" href="https://insultbot.vercel.app/" />
+  <link rel="alternate" hreflang="en" href="https://insultbot.vercel.app/" />
 
-  <!-- Open Graph / Social -->
+  <!-- Open Graph / Social - Enhanced -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://insultbot.vercel.app/" />
   <meta property="og:title" content="InsultBot: Free Brutal Insult Generator AI & Roast Maker" />
   <meta property="og:description"
     content="Destroy your friends with the #1 brutal insult generator AI(Batmeez Bot). Create savage roasts, witty comebacks, and soul-crushing burns instantly. Free, fast, and hilariously mean. Roast them now!" />
   <meta property="og:image" content="https://insultbot.vercel.app/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="InsultBot - AI Insult Generator" />
+  <meta property="og:site_name" content="InsultBot" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="en_GB" />
 
-  <!-- Twitter Card -->
+  <!-- Twitter Card - Enhanced -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="InsultBot: Free Brutal Insult Generator AI & Roast Maker" />
   <meta name="twitter:description"
     content="Destroy your friends with the #1 brutal insult generator AI(Batmeez Bot). Create savage roasts, witty comebacks, and soul-crushing burns instantly. Free, fast, and hilariously mean. Roast them now!" />
   <meta name="twitter:image" content="https://insultbot.vercel.app/og-image.png" />
+  <meta name="twitter:image:alt" content="InsultBot - AI Insult Generator" />
+  <meta name="twitter:site" content="@insultbot" />
+  <meta name="twitter:creator" content="@insultbot" />
+
+  <!-- Mobile App Meta -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="InsultBot" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="format-detection" content="telephone=no" />
+
+  <!-- Performance & Security -->
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
 
   <!-- Google Search Console -->
   <meta name="google-site-verification" content="oe-MbVRk52QdYgJ_sToVNDGuRHt3ibE1tT93uW5Euug" />
   <meta name="google-site-verification" content="BR9GYpW3XExXMYLK14nZlC55PH890IB_Pq8zZOIuhgo" />
+
+  <!-- Organization Schema -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "InsultBot",
+      "url": "https://insultbot.vercel.app/",
+      "logo": "https://insultbot.vercel.app/og-image.png",
+      "description": "Free AI-powered insult generator and roast maker",
+      "sameAs": [
+        "https://twitter.com/insultbot"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "Customer Service",
+        "url": "https://insultbot.vercel.app/about"
+      }
+    }
+  </script>
+
+  <!-- Website Schema -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "InsultBot",
+      "url": "https://insultbot.vercel.app/",
+      "description": "Free Brutal Insult Generator AI & Roast Maker",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://insultbot.vercel.app/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+  </script>
+
   <!-- Schema.org metadata for the main page / app -->
   <script type="application/ld+json">
     {
@@ -44,22 +115,43 @@
       "name": "InsultBot: Free Brutal Insult Generator AI & Roast Maker",
       "url": "https://insultbot.vercel.app/",
       "description": "Destroy your friends with the #1 brutal insult generator AI(Batmeez Bot). Create savage roasts, witty comebacks, and soul-crushing burns instantly. Free, fast, and hilariously mean. Roast them now!",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "InsultBot",
+        "url": "https://insultbot.vercel.app/"
+      },
+      "about": {
+        "@type": "Thing",
+        "name": "AI insult generator, rude bot AI, funny insult bot"
+      },
       "mainEntity": {
         "@type": "SoftwareApplication",
         "name": "InsultBot: Free Brutal Insult Generator AI & Roast Maker",
         "applicationCategory": "ChatbotApplication",
         "operatingSystem": "Web",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
         "description": "Destroy your friends with the #1 brutal insult generator AI(Batmeez Bot). Create savage roasts, witty comebacks, and soul-crushing burns instantly. Free, fast, and hilariously mean. Roast them now!",
         "url": "https://insultbot.vercel.app/",
+        "screenshot": "https://insultbot.vercel.app/og-image.png",
         "aggregateRating": {
           "@type": "AggregateRating",
           "ratingValue": "4.8",
-          "ratingCount": "152"
-        }
-      },
-      "about": {
-        "@type": "Thing",
-        "name": "insult bot AI, rude bot AI, funny insult bot"
+          "ratingCount": "152",
+          "bestRating": "5",
+          "worstRating": "1"
+        },
+        "featureList": [
+          "Free AI insult generation",
+          "Real-time voice interaction",
+          "Multiple language support",
+          "Savage roasts and comebacks",
+          "Instant responses"
+        ]
       }
     }
   </script>
@@ -75,7 +167,7 @@
           "name": "What is an insult bot?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "An insult bot is an AI chatbot designed to generate funny, rude, and sarcastic insults on demand for entertainment."
+            "text": "An insult bot is an AI chatbot designed to generate funny, rude, and sarcastic insults on demand for entertainment. InsultBot (Batmeez Bot) is a free AI-powered insult generator that creates savage roasts and witty comebacks instantly."
           }
         },
         {
@@ -83,7 +175,7 @@
           "name": "Is this rude bot AI free?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes, BatMeez Bot is a free rude bot AI that you can use instantly in your browser for entertainment and humor."
+            "text": "Yes, InsultBot (BatMeez Bot) is completely free to use. You can access it instantly in your browser without any registration or payment required. It's a free AI insult generator for entertainment and humor."
           }
         },
         {
@@ -91,7 +183,23 @@
           "name": "How does the AI insult generator work?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The AI insult generator uses a large language model to understand your prompts and respond with context-aware witty comebacks and savage roasts."
+            "text": "The AI insult generator uses advanced large language models (LLM) to understand your prompts and respond with context-aware witty comebacks and savage roasts. It analyzes your input and generates creative, humorous insults in real-time using natural language processing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use InsultBot on mobile?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, InsultBot is fully responsive and works on all devices including mobile phones, tablets, and desktops. You can use it anywhere with an internet connection and a modern web browser."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What languages does InsultBot support?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "InsultBot supports multiple languages and can detect and respond in the language you use. It supports English, Hindi, Urdu, and many other languages, adapting its style to match regional dialects and slang."
           }
         }
       ]
@@ -138,12 +246,12 @@
   <link rel="stylesheet" href="/index.css">
 
   <!-- Google Analytics 4 (replace G-XXXXXXXXXX with your real Measurement ID) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MEDJNJG9B6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
+    gtag('config', 'G-MEDJNJG9B6');
   </script>
 </head>
 
