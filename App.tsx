@@ -31,7 +31,7 @@ const usePageSEO = (title: string, description: string) => {
 const HomePage: React.FC = () => {
   usePageSEO(
     'InsultBot: Free Brutal Insult Generator AI & Roast Maker',
-    'Destroy your friends with the #1 brutal insult generator AI(Batmeez Bot). Create savage roasts, witty comebacks, and soul-crushing burns instantly. Free, fast, and hilariously mean. Roast them now!'
+    'Destroy your friends with the #1 brutal insult generator(chatbot) AI. Insult Bot by Batmeez Bot unleashes savage roasts, witty comebacks, and brutal burns.'
   );
   const [isConnected, setIsConnected] = useState(false);
   const [error, setError] = useState<string | null>(null);
