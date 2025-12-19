@@ -30,7 +30,7 @@ const usePageSEO = (title: string, description: string) => {
 
 const HomePage: React.FC = () => {
   usePageSEO(
-    'InsultBot: Free Brutal Insult Generator AI & Roast Maker',
+    'Insult Chatbot: Free Brutal Insult Generator AI & Roast Maker',
     'Destroy your friends with the #1 brutal insult generator(chatbot) AI. Insult Bot by Batmeez Bot unleashes savage roasts, witty comebacks, and brutal burns.'
   );
   const [isConnected, setIsConnected] = useState(false);
@@ -380,8 +380,8 @@ const PageShell: React.FC<{ title: string; description: string; heading: string;
 
 const BlogPage: React.FC = () => (
   <PageShell
-    title="Insult Bot Blog | Rude Bot AI Guides & Roast Ideas"
-    description="SEO-friendly guides about insult bot AI, roast ideas, internal linking, and how BatMeez Bot ranks on Google."
+    title="Insult Chatbot: Free Brutal Insult Generator AI & Roast Maker"
+    description="Destroy your friends with the #1 brutal insult generator(chatbot) AI. Insult Bot by Batmeez Bot unleashes savage roasts, witty comebacks, and brutal burns."
     heading="Insult Bot AI Blog"
   >
     <section className="grid gap-5 md:grid-cols-2">
