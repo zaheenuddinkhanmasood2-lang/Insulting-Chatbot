@@ -45,21 +45,21 @@ const HomePage: React.FC = () => {
   const sourceNodeRef = useRef<MediaStreamAudioSourceNode | null>(null);
   const nextStartTimeRef = useRef<number>(0);
   const activeSourcesRef = useRef<Set<AudioBufferSourceNode>>(new Set());
-  
+
   // Session ref
   const sessionPromiseRef = useRef<Promise<any> | null>(null);
 
   // Cleanup function to stop audio and disconnect
   const disconnect = async () => {
     try {
-        if (sessionPromiseRef.current) {
-            const session = await sessionPromiseRef.current;
-            session.close();
-        }
+      if (sessionPromiseRef.current) {
+        const session = await sessionPromiseRef.current;
+        session.close();
+      }
     } catch (e) {
-        console.error("Error closing session:", e);
+      console.error("Error closing session:", e);
     }
-    
+
     sessionPromiseRef.current = null;
 
     // Stop microphone stream
@@ -87,10 +87,10 @@ const HomePage: React.FC = () => {
       await outputAudioContextRef.current.close();
       outputAudioContextRef.current = null;
     }
-    
+
     // Stop any playing audio
     activeSourcesRef.current.forEach(source => {
-        try { source.stop(); } catch (e) {}
+      try { source.stop(); } catch (e) { }
     });
     activeSourcesRef.current.clear();
 
@@ -100,7 +100,7 @@ const HomePage: React.FC = () => {
 
   const handleConnect = async () => {
     setError(null);
-    
+
     if (isConnected) {
       await disconnect();
       return;
@@ -112,17 +112,22 @@ const HomePage: React.FC = () => {
       }
 
       const genAI = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      
+
       // Initialize Audio Contexts
       const AudioContext = (window as any).AudioContext || (window as any).webkitAudioContext;
-      
+
       // Input: 16kHz required by Gemini
       inputAudioContextRef.current = new AudioContext({ sampleRate: 16000 });
       // Output: 24kHz typical for Gemini response
       outputAudioContextRef.current = new AudioContext({ sampleRate: 24000 });
-      
+
       const inputCtx = inputAudioContextRef.current;
       const outputCtx = outputAudioContextRef.current;
+
+      if (!outputCtx) {
+        throw new Error("Failed to initialize output audio context.");
+      }
+
       const outputNode = outputCtx.createGain();
       outputNode.connect(outputCtx.destination);
 
@@ -136,9 +141,9 @@ const HomePage: React.FC = () => {
 
       const legacyGetUserMedia = (navigator as any).getUserMedia
         ? (constraints: MediaStreamConstraints) =>
-            new Promise<MediaStream>((resolve, reject) =>
-              (navigator as any).getUserMedia(constraints, resolve, reject)
-            )
+          new Promise<MediaStream>((resolve, reject) =>
+            (navigator as any).getUserMedia(constraints, resolve, reject)
+          )
         : null;
 
       const getUserMedia =
@@ -171,9 +176,13 @@ const HomePage: React.FC = () => {
             console.log("Gemini Live Session Connected");
 
             // Setup Input Pipeline (Mic -> Processor -> Gemini)
+            if (!inputCtx) {
+              throw new Error("Input audio context is not initialized.");
+            }
+
             const source = inputCtx.createMediaStreamSource(stream);
             sourceNodeRef.current = source;
-            
+
             // Buffer size 4096, 1 input channel, 1 output channel
             const scriptProcessor = inputCtx.createScriptProcessor(4096, 1, 1);
             scriptProcessorRef.current = scriptProcessor;
@@ -181,10 +190,10 @@ const HomePage: React.FC = () => {
             scriptProcessor.onaudioprocess = (e) => {
               const inputData = e.inputBuffer.getChannelData(0);
               const pcmBlob = createBlob(inputData);
-              
+
               if (sessionPromiseRef.current) {
                 sessionPromiseRef.current.then(session => {
-                    session.sendRealtimeInput({ media: pcmBlob });
+                  session.sendRealtimeInput({ media: pcmBlob });
                 });
               }
             };
@@ -193,50 +202,51 @@ const HomePage: React.FC = () => {
             scriptProcessor.connect(inputCtx.destination);
           },
           onmessage: async (message: LiveServerMessage) => {
-             // Handle Audio Response
-             const base64Audio = message.serverContent?.modelTurn?.parts[0]?.inlineData?.data;
-             
-             if (base64Audio) {
-               setIsBotSpeaking(true);
-               // Sync timing
-               nextStartTimeRef.current = Math.max(
-                 nextStartTimeRef.current,
-                 outputCtx.currentTime
-               );
+            // Handle Audio Response
+            const parts = message.serverContent?.modelTurn?.parts;
+            const base64Audio = parts && parts.length > 0 ? parts[0]?.inlineData?.data : undefined;
 
-               const audioBuffer = await decodeAudioData(
-                 decode(base64Audio),
-                 outputCtx,
-                 24000,
-                 1
-               );
+            if (base64Audio) {
+              setIsBotSpeaking(true);
+              // Sync timing
+              nextStartTimeRef.current = Math.max(
+                nextStartTimeRef.current,
+                outputCtx.currentTime
+              );
 
-               const source = outputCtx.createBufferSource();
-               source.buffer = audioBuffer;
-               source.connect(outputNode);
-               
-               source.addEventListener('ended', () => {
-                 activeSourcesRef.current.delete(source);
-                 if (activeSourcesRef.current.size === 0) {
-                    setIsBotSpeaking(false);
-                 }
-               });
+              const audioBuffer = await decodeAudioData(
+                decode(base64Audio),
+                outputCtx,
+                24000,
+                1
+              );
 
-               source.start(nextStartTimeRef.current);
-               activeSourcesRef.current.add(source);
-               nextStartTimeRef.current += audioBuffer.duration;
-             }
+              const source = outputCtx.createBufferSource();
+              source.buffer = audioBuffer;
+              source.connect(outputNode);
 
-             // Handle Interruption
-             if (message.serverContent?.interrupted) {
-               console.log("Model interrupted by user");
-               activeSourcesRef.current.forEach(src => {
-                   try { src.stop(); } catch (e) {}
-               });
-               activeSourcesRef.current.clear();
-               nextStartTimeRef.current = 0;
-               setIsBotSpeaking(false);
-             }
+              source.addEventListener('ended', () => {
+                activeSourcesRef.current.delete(source);
+                if (activeSourcesRef.current.size === 0) {
+                  setIsBotSpeaking(false);
+                }
+              });
+
+              source.start(nextStartTimeRef.current);
+              activeSourcesRef.current.add(source);
+              nextStartTimeRef.current += audioBuffer.duration;
+            }
+
+            // Handle Interruption
+            if (message.serverContent?.interrupted) {
+              console.log("Model interrupted by user");
+              activeSourcesRef.current.forEach(src => {
+                try { src.stop(); } catch (e) { }
+              });
+              activeSourcesRef.current.clear();
+              nextStartTimeRef.current = 0;
+              setIsBotSpeaking(false);
+            }
           },
           onclose: () => {
             console.log("Session closed");
@@ -304,15 +314,15 @@ const HomePage: React.FC = () => {
           disabled={!process.env.API_KEY}
           className={`
             group relative px-8 py-4 rounded-full font-bold text-lg tracking-wider transition-all duration-300
-            ${isConnected 
-              ? 'bg-zinc-900 text-red-500 border-2 border-red-900 hover:bg-red-950 hover:border-red-700 shadow-[0_0_20px_rgba(127,29,29,0.4)]' 
+            ${isConnected
+              ? 'bg-zinc-900 text-red-500 border-2 border-red-900 hover:bg-red-950 hover:border-red-700 shadow-[0_0_20px_rgba(127,29,29,0.4)]'
               : 'bg-gradient-to-br from-red-600 to-red-900 text-white hover:scale-105 hover:shadow-[0_0_30px_rgba(220,38,38,0.5)]'
             }
             disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none
           `}
         >
           {isConnected ? 'DISCONNECT (NIKLO)' : 'START CONVERSATION'}
-          
+
           {/* Hover glow effect */}
           {!isConnected && (
             <div className="absolute inset-0 rounded-full bg-red-500 blur-md opacity-0 group-hover:opacity-40 transition-opacity duration-300 -z-10"></div>
