@@ -1,0 +1,22 @@
+{
+  "name": "Insult Chatbot: Free Brutal Insult Generator AI & Roast Maker",
+  "short_name": "InsultBot",
+  "description": "Destroy your friends with the #1 brutal insult generator AI. Insult Bot by Batmeez Bot unleashes savage roasts, witty comebacks, and brutal burns.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#18181b",
+  "theme_color": "#18181b",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["entertainment", "utilities"],
+  "lang": "en",
+  "dir": "ltr"
+}
+
