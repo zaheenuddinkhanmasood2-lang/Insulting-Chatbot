@@ -34,70 +34,95 @@ const blogPosts: BlogPost[] = [
     keywords: ['insult bot AI', 'insult chatbot', 'funny insult bot', 'roast bot', 'entertainment AI'],
     content: (
       <>
+        <div className="my-8 rounded-lg overflow-hidden border border-zinc-800">
+          <img
+            src="https://media.istockphoto.com/id/644613898/photo/terrorism-in-the-future.jpg?s=2048x2048&w=is&k=20&c=yEftzz_sUkcSQE-eew7wowO0CLx1nNzEyAGI3RHLWzI="
+            alt="AI chatbot with personality - Insult Bot AI entertainment"
+            className="w-full h-auto object-cover"
+            loading="lazy"
+          />
+        </div>
+
         <h2 className="text-2xl font-bold text-zinc-50 mt-6 mb-4">Why Nice is Overrated</h2>
         <p className="text-sm leading-relaxed text-zinc-200 mb-4">
-          Let's be honest: asking an AI for the weather or a cookie recipe is useful, but it's incredibly boring. 
-          We live in an era of polite, sterilized digital assistants that are afraid to step on toes. But sometimes, 
+          Let's be honest: asking an AI for the weather or a cookie recipe is useful, but it's incredibly boring.
+          We live in an era of polite, sterilized digital assistants that are afraid to step on toes. But sometimes,
           you don't want polite. You want personality.
         </p>
         <p className="text-sm leading-relaxed text-zinc-200 mb-4">
           Enter the new wave of entertainment AI: the <Link to="/" className="text-red-400 hover:underline">funny insult bot</Link>.
         </p>
         <p className="text-sm leading-relaxed text-zinc-200 mb-4">
-          If you've ever wanted to roast your friends, find the perfect witty comeback, or just see if a machine 
-          can hurt your feelings (in a funny way), you're in the right place. Our new insult bot AI isn't here to 
+          If you've ever wanted to roast your friends, find the perfect witty comeback, or just see if a machine
+          can hurt your feelings (in a funny way), you're in the right place. Our new insult bot AI isn't here to
           be your assistant—it's here to be your sarcastic best friend.
         </p>
 
         <h2 className="text-2xl font-bold text-zinc-50 mt-8 mb-4">What is an Insult Bot AI?</h2>
+        <div className="my-6 rounded-lg overflow-hidden border border-zinc-800">
+          <img
+            src="https://media.istockphoto.com/id/94735783/photo/alien-grey-female-creature.jpg?s=612x612&w=0&k=20&c=pDluHZkW2O6HBzl7NEhTLjqcQdCl_FHqeoDRGDJePsA="
+            alt="AI language model generating humorous responses - Insult chatbot technology"
+            className="w-full h-auto object-cover"
+            loading="lazy"
+          />
+        </div>
         <p className="text-sm leading-relaxed text-zinc-200 mb-4">
-          An insult bot AI is a specialized language model designed to generate humorous, sarcastic, and witty responses. 
+          An insult bot AI is a specialized language model designed to generate humorous, sarcastic, and witty responses.
           Unlike standard chatbots that are programmed to be servile, an insult bot is tuned for banter.
         </p>
         <p className="text-sm leading-relaxed text-zinc-200 mb-4">
-          Think of it as a digital comedian. It uses advanced natural language processing (NLP) to understand context 
+          Think of it as a digital comedian. It uses advanced natural language processing (NLP) to understand context
           and deliver a "roast" that is sharp, funny, and surprisingly human.
         </p>
 
         <h2 className="text-2xl font-bold text-zinc-50 mt-8 mb-4">Why Use an Insult Chatbot?</h2>
         <p className="text-sm leading-relaxed text-zinc-200 mb-4">
-          You might be wondering, "Why would I want a robot to be mean to me?" It's not about being mean; it's about 
+          You might be wondering, "Why would I want a robot to be mean to me?" It's not about being mean; it's about
           entertainment. Here is why thousands of users are flocking to InsultBot:
         </p>
 
         <h3 className="text-xl font-semibold text-zinc-50 mt-6 mb-3">1. The Ultimate Icebreaker</h3>
         <p className="text-sm leading-relaxed text-zinc-200 mb-4">
-          Silence in the group chat? Drop a link to the <Link to="/" className="text-red-400 hover:underline">funny insult bot</Link>. 
+          Silence in the group chat? Drop a link to the <Link to="/" className="text-red-400 hover:underline">funny insult bot</Link>.
           Nothing bonds people faster than collectively laughing at an AI roasting everyone in the room.
         </p>
 
         <h3 className="text-xl font-semibold text-zinc-50 mt-6 mb-3">2. Sharpen Your Wits</h3>
         <p className="text-sm leading-relaxed text-zinc-200 mb-4">
-          Want to get better at banter? Sparring with an insult bot AI is the perfect training ground. It creates unique, 
+          Want to get better at banter? Sparring with an insult bot AI is the perfect training ground. It creates unique,
           never-before-seen comebacks that you can use in your next friendly debate.
         </p>
 
         <h3 className="text-xl font-semibold text-zinc-50 mt-6 mb-3">3. Pure Entertainment</h3>
         <p className="text-sm leading-relaxed text-zinc-200 mb-4">
-          Sometimes you just need a laugh. The unpredictability of the bot makes it addictive. Will it make a pun? 
+          Sometimes you just need a laugh. The unpredictability of the bot makes it addictive. Will it make a pun?
           Will it call out your typing speed? You never know what it's going to say next.
         </p>
 
         <h2 className="text-2xl font-bold text-zinc-50 mt-8 mb-4">How We Built the Fastest Roast Bot on Vercel</h2>
+        <div className="my-6 rounded-lg overflow-hidden border border-zinc-800">
+          <img
+            src="https://media.istockphoto.com/id/866933414/photo/robot-hand-showing-middle-finger-3d-rendering.webp?a=1&b=1&s=612x612&w=0&k=20&c=W39nBWTA_j9kYU55UEqYMQq9v4aWkVN3nmrnvVL6uZs="
+            alt="Fast AI response speed - Vercel edge network performance for insult bot"
+            className="w-full h-auto object-cover"
+            loading="lazy"
+          />
+        </div>
         <p className="text-sm leading-relaxed text-zinc-200 mb-4">
-          Speed matters. A joke isn't funny if you have to wait 10 seconds for the punchline. That's why InsultBot 
+          Speed matters. A joke isn't funny if you have to wait 10 seconds for the punchline. That's why InsultBot
           is hosted on Vercel.
         </p>
         <p className="text-sm leading-relaxed text-zinc-200 mb-4">
-          By leveraging Vercel's edge network, our insult chatbot delivers responses in milliseconds. This ensures that 
-          the banter flows naturally, just like a real conversation. Whether you are on mobile or desktop, the roast 
+          By leveraging Vercel's edge network, our insult chatbot delivers responses in milliseconds. This ensures that
+          the banter flows naturally, just like a real conversation. Whether you are on mobile or desktop, the roast
           is served hot and fast.
         </p>
 
         <h2 className="text-2xl font-bold text-zinc-50 mt-8 mb-4">Safe, Consensual Fun</h2>
         <p className="text-sm leading-relaxed text-zinc-200 mb-4">
-          It is important to note that while our insult bot AI has an attitude, it's designed for comedy. We believe 
-          in roasting, not bullying. The goal is to make you laugh at the absurdity of a machine having an attitude, 
+          It is important to note that while our insult bot AI has an attitude, it's designed for comedy. We believe
+          in roasting, not bullying. The goal is to make you laugh at the absurdity of a machine having an attitude,
           not to spread genuine hate.
         </p>
 
@@ -107,7 +132,7 @@ const blogPosts: BlogPost[] = [
             Are you brave enough to press start?
           </p>
           <p className="text-sm leading-relaxed text-zinc-200 mb-4">
-            Stop talking to boring robots. Experience the sharpest, funniest insult chatbot on the web today. 
+            Stop talking to boring robots. Experience the sharpest, funniest insult chatbot on the web today.
             But don't say we didn't warn you—it doesn't hold back.
           </p>
           <Link
@@ -132,8 +157,8 @@ const blogPosts: BlogPost[] = [
       <>
         <h2 className="text-2xl font-bold text-zinc-50 mt-6 mb-4">Stop Downloading Apps Just to Get Roasted</h2>
         <p className="text-sm leading-relaxed text-zinc-200 mb-4">
-          We've all been there. You want a quick laugh, or you need a savage comeback for a group chat. 
-          You search for an "AI roast bot," and what do you find? A dozen apps demanding 200MB of storage, 
+          We've all been there. You want a quick laugh, or you need a savage comeback for a group chat.
+          You search for an "AI roast bot," and what do you find? A dozen apps demanding 200MB of storage,
           a signup with your email, and a "Pro Subscription" just to unlock the funny jokes.
         </p>
         <p className="text-sm leading-relaxed text-zinc-200 mb-4">
@@ -144,21 +169,29 @@ const blogPosts: BlogPost[] = [
         </p>
 
         <h2 className="text-2xl font-bold text-zinc-50 mt-8 mb-4">The Rise of the Web-Based Insult Bot</h2>
+        <div className="my-6 rounded-lg overflow-hidden border border-zinc-800">
+          <img
+            src="https://media.istockphoto.com/id/182003453/photo/devil-leaning-on-an-imaginary-object.jpg?s=612x612&w=0&k=20&c=HrcqOLIBtO4L0WHVbFTY7DjPICbwiNOQ6NwoNTa4SRY="
+            alt="Fast browser-based AI chatbot - Instant loading insult bot on web"
+            className="w-full h-auto object-cover"
+            loading="lazy"
+          />
+        </div>
         <p className="text-sm leading-relaxed text-zinc-200 mb-4">
-          Why is everyone switching to browser-based AI? Because speed is the ultimate punchline. When you are 
+          Why is everyone switching to browser-based AI? Because speed is the ultimate punchline. When you are
           in the middle of a text battle or a discord argument, you don't have time to install an app.
         </p>
         <p className="text-sm leading-relaxed text-zinc-200 mb-4">
           You need an <Link to="/" className="text-red-400 hover:underline">insult bot AI</Link> that loads instantly.
         </p>
         <p className="text-sm leading-relaxed text-zinc-200 mb-4">
-          Our tool is hosted on Vercel, which means it uses "Edge Network" technology. In non-tech speak: it's fast. 
+          Our tool is hosted on Vercel, which means it uses "Edge Network" technology. In non-tech speak: it's fast.
           Ridiculously fast. You type a prompt, and the AI fires back a roast before you can even blink.
         </p>
 
         <h2 className="text-2xl font-bold text-zinc-50 mt-8 mb-4">Test Driving the "Savage" Engine</h2>
         <p className="text-sm leading-relaxed text-zinc-200 mb-4">
-          Unlike other bots that rely on recycled "yo mama" jokes from 2005, this insult chatbot is powered by modern 
+          Unlike other bots that rely on recycled "yo mama" jokes from 2005, this insult chatbot is powered by modern
           LLMs (Large Language Models). This means it understands context.
         </p>
         <p className="text-sm leading-relaxed text-zinc-200 mb-4">
@@ -182,7 +215,7 @@ const blogPosts: BlogPost[] = [
 
         <div className="mt-6 p-4 bg-zinc-900/50 rounded-lg border border-zinc-800">
           <p className="text-sm text-zinc-300">
-            <strong className="text-red-400">Note:</strong> This is all in good fun. The AI is tuned for comedy, 
+            <strong className="text-red-400">Note:</strong> This is all in good fun. The AI is tuned for comedy,
             making it the perfect tool for friends, parties, and breaking the ice.
           </p>
         </div>
@@ -193,26 +226,50 @@ const blogPosts: BlogPost[] = [
         </p>
 
         <h3 className="text-xl font-semibold text-zinc-50 mt-6 mb-3">1. The "Fantasy Football" Loser Punishment</h3>
+        <div className="my-4 rounded-lg overflow-hidden border border-zinc-800">
+          <img
+            src="https://media.istockphoto.com/id/476638482/photo/bad-robot.jpg?s=612x612&w=0&k=20&c=-iWMbtJ8ipVcXDHlYNlSwuO0HFOSEF4szNZFfJRcQDc="
+            alt="Fantasy football group chat with insult bot AI - Fun roast generator use case"
+            className="w-full h-auto object-cover"
+            loading="lazy"
+          />
+        </div>
         <p className="text-sm leading-relaxed text-zinc-200 mb-4">
-          Did someone in your league score zero points? Feed their stats into the insult bot AI and paste the result 
+          Did someone in your league score zero points? Feed their stats into the insult bot AI and paste the result
           in the group chat. It's brutal, effective, and hilarious.
         </p>
 
         <h3 className="text-xl font-semibold text-zinc-50 mt-6 mb-3">2. The Tinder Bio Review</h3>
+        <div className="my-4 rounded-lg overflow-hidden border border-zinc-800">
+          <img
+            src="https://images.sh.com/photo-1521791136064-7986c2920216?w=800&h=500&fit=crop&q=80"
+            alt="Dating app profile review with AI insult bot - Creative chatbot use case"
+            className="w-full h-auto object-cover"
+            loading="lazy"
+          />
+        </div>
         <p className="text-sm leading-relaxed text-zinc-200 mb-4">
-          Not getting matches? Maybe your bio is too earnest. Paste it into the bot and ask for a roast. The feedback 
+          Not getting matches? Maybe your bio is too earnest. Paste it into the bot and ask for a roast. The feedback
           will be harsh, but it might just be the reality check you need.
         </p>
 
         <h3 className="text-xl font-semibold text-zinc-50 mt-6 mb-3">3. The "Code Review"</h3>
+        <div className="my-4 rounded-lg overflow-hidden border border-zinc-800">
+          <img
+            src="https://media.istockphoto.com/id/585509432/photo/angry-man.jpg?s=2048x2048&w=is&k=20&c=g09iJ5tbAqov-JFBMqBhXSWD-9a7gslV05ja9OG29H4="
+            alt="Developer code review with insult bot AI - Programming humor chatbot"
+            className="w-full h-auto object-cover"
+            loading="lazy"
+          />
+        </div>
         <p className="text-sm leading-relaxed text-zinc-200 mb-4">
-          For the developers out there: paste a snippet of your spaghetti code into the bot. If you think your senior 
+          For the developers out there: paste a snippet of your spaghetti code into the bot. If you think your senior
           dev is mean, wait until you hear what an AI thinks of your variable naming conventions.
         </p>
 
         <h2 className="text-2xl font-bold text-zinc-50 mt-8 mb-4">Conclusion: Simplicity Wins</h2>
         <p className="text-sm leading-relaxed text-zinc-200 mb-4">
-          The internet is cluttered with bloatware. InsultBot is the antidote. It does one thing, and it does it perfectly: 
+          The internet is cluttered with bloatware. InsultBot is the antidote. It does one thing, and it does it perfectly:
           it makes you laugh.
         </p>
         <p className="text-sm leading-relaxed text-zinc-200 mb-4">
@@ -690,7 +747,7 @@ const BlogPage: React.FC = () => {
       <div className="mt-8 p-4 bg-zinc-900/50 rounded-lg border border-zinc-800">
         <h3 className="text-lg font-semibold text-zinc-50 mb-2">Want to Try the Insult Bot?</h3>
         <p className="text-sm text-zinc-300 mb-3">
-          Experience the AI-powered insult generator that's driving traffic to this blog. 
+          Experience the AI-powered insult generator that's driving traffic to this blog.
           <Link to="/" className="text-red-400 hover:underline ml-1">Try Batmeez Bot now →</Link>
         </p>
       </div>
