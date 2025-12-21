@@ -4,14 +4,107 @@ import {
   Routes,
   Route,
   Link,
+  useParams,
 } from 'react-router-dom';
 import { GoogleGenAI, LiveServerMessage, Modality } from '@google/genai';
 import { encode, decode, decodeAudioData, createBlob } from './utils/audio';
 import { SYSTEM_INSTRUCTION, MODEL_NAME, VOICE_NAME } from './constants';
 import { Visualizer } from './components/Visualizer';
 
-// Simple helper to set per-page SEO without touching main index.html structure
-const usePageSEO = (title: string, description: string) => {
+// Blog post data structure
+interface BlogPost {
+  slug: string;
+  title: string;
+  description: string;
+  content: React.ReactNode;
+  category: string;
+  readTime: string;
+  publishedDate: string;
+  keywords: string[];
+}
+
+const blogPosts: BlogPost[] = [
+  {
+    slug: 'seo-playbook',
+    title: 'Insult Bot SEO Playbook: How to Rank for "Rude Bot AI" Keywords',
+    description: 'Learn how BatMeez Bot ranks for "insult bot AI", "rude bot chatbot", and "funny insult generator" using schema markup, fast hosting, and strategic internal linking.',
+    category: 'SEO',
+    readTime: '5 min read',
+    publishedDate: '2024-01-15',
+    keywords: ['insult bot AI', 'rude bot chatbot', 'SEO strategy', 'schema markup'],
+    content: (
+      <>
+        <p className="text-sm leading-relaxed text-zinc-200 mb-4">
+          How BatMeez Bot ranks for "insult bot AI", "rude bot chatbot", and "funny insult generator"
+          using schema, fast Vercel hosting, and internal links to the homepage, About, and API pages.
+        </p>
+        <h3 className="text-xl font-semibold text-zinc-50 mt-6 mb-3">Key SEO Strategies</h3>
+        <ul className="space-y-2 text-sm text-zinc-200 list-disc pl-6 mb-4">
+          <li>WebPage + SoftwareApplication JSON-LD for clear entity signals</li>
+          <li>FAQPage schema to earn rich results on Q&A queries</li>
+          <li>Sitemap + robots.txt pointing Google to key URLs</li>
+          <li>Internal links back to Home, About, and API pages</li>
+          <li>Mobile-first responsive design for better rankings</li>
+          <li>Fast page load times with optimized assets</li>
+        </ul>
+        <p className="text-sm leading-relaxed text-zinc-200 mb-4">
+          Keep content fast, mobile-friendly, and keyword-natural—Google rewards speed and clarity.
+          The insult bot AI market is competitive, but with proper schema markup and strategic content,
+          you can capture high-intent traffic looking for entertainment chatbots.
+        </p>
+        <div className="mt-6 p-4 bg-zinc-900/50 rounded-lg border border-zinc-800">
+          <p className="text-sm text-zinc-300 mb-2">
+            <strong className="text-red-400">Pro Tip:</strong> Use long-tail keywords like "free insult bot AI" 
+            and "rude chatbot generator" to capture specific search intent and drive qualified traffic 
+            to your chatbot application.
+          </p>
+        </div>
+      </>
+    ),
+  },
+  {
+    slug: 'funny-roasts',
+    title: '25 Funny, Safe Roast Lines for Your Insult Bot AI',
+    description: 'Click-worthy, share-friendly roast ideas in Hinglish and English that show off the insult bot personality while keeping things playful and safe.',
+    category: 'Content',
+    readTime: '4 min read',
+    publishedDate: '2024-01-10',
+    keywords: ['funny roasts', 'insult generator', 'roast lines', 'Hinglish insults'],
+    content: (
+      <>
+        <p className="text-sm leading-relaxed text-zinc-200 mb-4">
+          Click-worthy, share-friendly roast ideas in Hinglish and English that show off the insult bot
+          personality while keeping things playful and safe.
+        </p>
+        <h3 className="text-xl font-semibold text-zinc-50 mt-6 mb-3">Top Roast Lines</h3>
+        <ul className="space-y-2 text-sm text-zinc-200 list-disc pl-6 mb-4">
+          <li>"Internet slow? Ya dimaag 2G pe atka hua hai?"</li>
+          <li>"Confidence download karle, warna main hi update bhej doon?"</li>
+          <li>"Brain ka RAM free kar—background mein drama chal raha hai."</li>
+          <li>"Itni der kyun? Google pe khoye the ya life pe?"</li>
+          <li>"Teri battery low hai, aur tu power-saver mode mein bhi boring hai."</li>
+          <li>"Tujhe lagta hai tu smart hai? Calculator bhi smart hota hai."</li>
+          <li>"Confidence level: -100. Self-esteem: Missing in action."</li>
+          <li>"Teri personality offline hai, aur tu online bhi boring hai."</li>
+        </ul>
+        <p className="text-sm leading-relaxed text-zinc-200 mb-4">
+          Open the mic on the <Link className="text-red-400 hover:underline" to="/">Insult Bot AI homepage</Link> or
+          read the <Link className="text-red-400 hover:underline" to="/about">About page</Link> to learn how BatMeez crafts safe roasts.
+        </p>
+        <div className="mt-6 p-4 bg-zinc-900/50 rounded-lg border border-zinc-800">
+          <p className="text-sm text-zinc-300">
+            <strong className="text-red-400">Remember:</strong> These roasts are designed for entertainment. 
+            Always keep content playful and avoid anything that could be genuinely hurtful. The goal is 
+            humor, not harm.
+          </p>
+        </div>
+      </>
+    ),
+  },
+];
+
+// Enhanced SEO hook with Article schema support
+const usePageSEO = (title: string, description: string, articleSchema?: any) => {
   useEffect(() => {
     if (title) {
       document.title = title;
@@ -25,7 +118,20 @@ const usePageSEO = (title: string, description: string) => {
       }
       meta.setAttribute('content', description);
     }
-  }, [title, description]);
+
+    // Add Article schema if provided
+    if (articleSchema) {
+      let existingSchema = document.querySelector('script[type="application/ld+json"][data-article]');
+      if (existingSchema) {
+        existingSchema.remove();
+      }
+      const schemaScript = document.createElement('script');
+      schemaScript.type = 'application/ld+json';
+      schemaScript.setAttribute('data-article', 'true');
+      schemaScript.textContent = JSON.stringify(articleSchema);
+      document.head.appendChild(schemaScript);
+    }
+  }, [title, description, articleSchema]);
 };
 
 const HomePage: React.FC = () => {
@@ -388,65 +494,245 @@ const PageShell: React.FC<{ title: string; description: string; heading: string;
   );
 };
 
-const BlogPage: React.FC = () => (
-  <PageShell
-    title="Insult Chatbot: Free Brutal Insult Generator AI & Roast Maker"
-    description="Destroy your friends with the #1 brutal insult generator(chatbot) AI. Insult Bot by Batmeez Bot unleashes savage roasts, witty comebacks, and brutal burns."
-    heading="Insult Bot AI Blog"
-  >
-    <section className="grid gap-5 md:grid-cols-2">
-      <article className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5 shadow-[0_8px_30px_rgba(0,0,0,0.35)] hover:border-red-500 hover:shadow-[0_12px_40px_rgba(239,68,68,0.25)] transition">
-        <p className="text-[11px] uppercase tracking-[0.2em] text-red-400">SEO • Rude Bot AI</p>
-        <h2 className="mt-2 text-lg font-semibold text-zinc-50">Insult Bot SEO Playbook</h2>
-        <p className="mt-2 text-sm text-zinc-300">
-          How BatMeez Bot ranks for “insult bot AI”, “rude bot chatbot”, and “funny insult generator”
-          using schema, fast Vercel hosting, and internal links to the homepage, About, and API pages.
+const BlogPage: React.FC = () => {
+  usePageSEO(
+    'Insult Bot AI Blog | SEO Tips, Roast Ideas & Chatbot Strategies',
+    'Discover SEO strategies, funny roast ideas, and content tips for insult bot AI applications. Learn how to rank your chatbot and drive traffic with expert blog posts.',
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Blog',
+      'name': 'Insult Bot AI Blog',
+      'description': 'SEO tips, roast ideas, and strategies for insult bot AI applications',
+      'url': 'https://insultbot.vercel.app/blog',
+      'publisher': {
+        '@type': 'Organization',
+        'name': 'InsultBot',
+        'url': 'https://insultbot.vercel.app/',
+      },
+      'blogPost': blogPosts.map(post => ({
+        '@type': 'BlogPosting',
+        'headline': post.title,
+        'description': post.description,
+        'url': `https://insultbot.vercel.app/blog/${post.slug}`,
+        'datePublished': post.publishedDate,
+        'author': {
+          '@type': 'Organization',
+          'name': 'InsultBot',
+        },
+        'keywords': post.keywords.join(', '),
+      })),
+    }
+  );
+
+  return (
+    <PageShell
+      title="Insult Bot AI Blog | SEO Tips, Roast Ideas & Chatbot Strategies"
+      description="Discover SEO strategies, funny roast ideas, and content tips for insult bot AI applications. Learn how to rank your chatbot and drive traffic with expert blog posts."
+      heading="Insult Bot AI Blog"
+    >
+      <p className="text-sm text-zinc-400 mb-6">
+        Expert insights on SEO, content strategy, and growing your insult bot AI chatbot application.
+      </p>
+      <section className="grid gap-5 md:grid-cols-2">
+        {blogPosts.map((post) => (
+          <article
+            key={post.slug}
+            className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5 shadow-[0_8px_30px_rgba(0,0,0,0.35)] hover:border-red-500 hover:shadow-[0_12px_40px_rgba(239,68,68,0.25)] transition"
+          >
+            <p className="text-[11px] uppercase tracking-[0.2em] text-red-400">{post.category} • Rude Bot AI</p>
+            <h2 className="mt-2 text-lg font-semibold text-zinc-50">
+              <Link to={`/blog/${post.slug}`} className="hover:text-red-400 transition">
+                {post.title}
+              </Link>
+            </h2>
+            <p className="mt-2 text-sm text-zinc-300">{post.description}</p>
+            <div className="mt-4 flex justify-between items-center text-sm text-red-300">
+              <span>{post.readTime} • {post.category}</span>
+              <Link
+                to={`/blog/${post.slug}`}
+                className="inline-flex items-center gap-1 text-red-400 hover:underline"
+              >
+                Read more →
+              </Link>
+            </div>
+          </article>
+        ))}
+      </section>
+      <div className="mt-8 p-4 bg-zinc-900/50 rounded-lg border border-zinc-800">
+        <h3 className="text-lg font-semibold text-zinc-50 mb-2">Want to Try the Insult Bot?</h3>
+        <p className="text-sm text-zinc-300 mb-3">
+          Experience the AI-powered insult generator that's driving traffic to this blog. 
+          <Link to="/" className="text-red-400 hover:underline ml-1">Try Batmeez Bot now →</Link>
         </p>
-        <ul className="mt-3 space-y-1 text-sm text-zinc-200 list-disc pl-4">
-          <li>WebPage + SoftwareApplication JSON-LD for clear entity signals</li>
-          <li>FAQPage schema to earn rich results on Q&A queries</li>
-          <li>Sitemap + robots.txt pointing Google to key URLs</li>
-          <li>Internal links back to <Link className="text-red-400 hover:underline" to="/">Home</Link>, <Link className="text-red-400 hover:underline" to="/about">About</Link>, <Link className="text-red-400 hover:underline" to="/api-docs">API</Link></li>
-        </ul>
-        <p className="mt-3 text-sm text-zinc-300">
-          Keep content fast, mobile-friendly, and keyword-natural—Google rewards speed and clarity.
-        </p>
-        <div className="mt-4 flex justify-between items-center text-sm text-red-300">
-          <span>5 min read • High intent</span>
-          <Link to="/" className="inline-flex items-center gap-1 text-red-400 hover:underline">
-            Try the bot ↗
+      </div>
+    </PageShell>
+  );
+};
+
+// Individual Blog Post Page Component
+const BlogPostPage: React.FC = () => {
+  const { slug } = useParams<{ slug: string }>();
+  const post = blogPosts.find((p) => p.slug === slug);
+
+  if (!post) {
+    return (
+      <PageShell
+        title="Blog Post Not Found | Insult Bot AI"
+        description="The blog post you're looking for doesn't exist."
+        heading="Post Not Found"
+      >
+        <p className="text-sm text-zinc-300">
+          The blog post you're looking for doesn't exist.{' '}
+          <Link to="/blog" className="text-red-400 hover:underline">
+            View all blog posts →
           </Link>
-        </div>
+        </p>
+      </PageShell>
+    );
+  }
+
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    'headline': post.title,
+    'description': post.description,
+    'url': `https://insultbot.vercel.app/blog/${post.slug}`,
+    'datePublished': post.publishedDate,
+    'dateModified': post.publishedDate,
+    'author': {
+      '@type': 'Organization',
+      'name': 'InsultBot',
+      'url': 'https://insultbot.vercel.app/',
+    },
+    'publisher': {
+      '@type': 'Organization',
+      'name': 'InsultBot',
+      'logo': {
+        '@type': 'ImageObject',
+        'url': 'https://insultbot.vercel.app/og-image.png',
+      },
+    },
+    'mainEntityOfPage': {
+      '@type': 'WebPage',
+      '@id': `https://insultbot.vercel.app/blog/${post.slug}`,
+    },
+    'keywords': post.keywords.join(', '),
+    'articleSection': post.category,
+    'inLanguage': 'en-US',
+  };
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      {
+        '@type': 'ListItem',
+        'position': 1,
+        'name': 'Home',
+        'item': 'https://insultbot.vercel.app/',
+      },
+      {
+        '@type': 'ListItem',
+        'position': 2,
+        'name': 'Blog',
+        'item': 'https://insultbot.vercel.app/blog',
+      },
+      {
+        '@type': 'ListItem',
+        'position': 3,
+        'name': post.title,
+        'item': `https://insultbot.vercel.app/blog/${post.slug}`,
+      },
+    ],
+  };
+
+  usePageSEO(post.title, post.description, articleSchema);
+
+  useEffect(() => {
+    // Add breadcrumb schema
+    let existingBreadcrumb = document.querySelector('script[type="application/ld+json"][data-breadcrumb]');
+    if (existingBreadcrumb) {
+      existingBreadcrumb.remove();
+    }
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.type = 'application/ld+json';
+    breadcrumbScript.setAttribute('data-breadcrumb', 'true');
+    breadcrumbScript.textContent = JSON.stringify(breadcrumbSchema);
+    document.head.appendChild(breadcrumbScript);
+  }, [slug]);
+
+  return (
+    <PageShell title={post.title} description={post.description} heading={post.title}>
+      {/* Breadcrumb Navigation */}
+      <nav className="text-xs text-zinc-500 mb-6" aria-label="Breadcrumb">
+        <ol className="flex items-center gap-2">
+          <li>
+            <Link to="/" className="hover:text-red-400">
+              Home
+            </Link>
+          </li>
+          <li>/</li>
+          <li>
+            <Link to="/blog" className="hover:text-red-400">
+              Blog
+            </Link>
+          </li>
+          <li>/</li>
+          <li className="text-zinc-400">{post.title}</li>
+        </ol>
+      </nav>
+
+      {/* Article Meta */}
+      <div className="flex items-center gap-4 text-xs text-zinc-500 mb-6">
+        <span className="px-2 py-1 bg-red-500/20 text-red-400 rounded">{post.category}</span>
+        <span>{post.readTime}</span>
+        <span>{new Date(post.publishedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+      </div>
+
+      {/* Article Content */}
+      <article className="prose prose-invert max-w-none">
+        {post.content}
       </article>
 
-      <article className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5 shadow-[0_8px_30px_rgba(0,0,0,0.35)] hover:border-red-500 hover:shadow-[0_12px_40px_rgba(239,68,68,0.25)] transition">
-        <p className="text-[11px] uppercase tracking-[0.2em] text-red-400">Content • Roast Ideas</p>
-        <h2 className="mt-2 text-lg font-semibold text-zinc-50">25 Funny, Safe Roast Lines</h2>
-        <p className="mt-2 text-sm text-zinc-300">
-          Click-worthy, share-friendly roast ideas in Hinglish and English that show off the insult bot
-          personality while keeping things playful and safe.
+      {/* CTA Section */}
+      <div className="mt-8 p-6 bg-gradient-to-r from-red-900/20 to-zinc-900/50 rounded-lg border border-red-500/30">
+        <h3 className="text-xl font-semibold text-zinc-50 mb-2">Ready to Try the Insult Bot?</h3>
+        <p className="text-sm text-zinc-300 mb-4">
+          Experience the AI-powered chatbot that's driving traffic. Get roasted with witty comebacks and savage burns.
         </p>
-        <ul className="mt-3 space-y-1 text-sm text-zinc-200 list-disc pl-4">
-          <li>“Internet slow? Ya dimaag 2G pe atka hua hai?”</li>
-          <li>“Confidence download karle, warna main hi update bhej doon?”</li>
-          <li>“Brain ka RAM free kar—background mein drama chal raha hai.”</li>
-          <li>“Itni der kyun? Google pe khoye the ya life pe?”</li>
-          <li>“Teri battery low hai, aur tu power-saver mode mein bhi boring hai.”</li>
-        </ul>
-        <p className="mt-3 text-sm text-zinc-300">
-          Open the mic on the <Link className="text-red-400 hover:underline" to="/">Insult Bot AI homepage</Link> or
-          read the <Link className="text-red-400 hover:underline" to="/about">About page</Link> to learn how BatMeez crafts safe roasts.
-        </p>
-        <div className="mt-4 flex justify-between items-center text-sm text-red-300">
-          <span>4 min read • Shareable</span>
-          <Link to="/" className="inline-flex items-center gap-1 text-red-400 hover:underline">
-            Get roasted ↗
-          </Link>
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition text-sm font-semibold"
+        >
+          Try Batmeez Bot Now →
+        </Link>
+      </div>
+
+      {/* Related Posts */}
+      <div className="mt-8 pt-8 border-t border-zinc-800">
+        <h3 className="text-lg font-semibold text-zinc-50 mb-4">More Blog Posts</h3>
+        <div className="grid gap-4 md:grid-cols-2">
+          {blogPosts
+            .filter((p) => p.slug !== slug)
+            .map((relatedPost) => (
+              <Link
+                key={relatedPost.slug}
+                to={`/blog/${relatedPost.slug}`}
+                className="block p-4 rounded-lg border border-zinc-800 bg-zinc-900/50 hover:border-red-500 transition"
+              >
+                <p className="text-[11px] uppercase tracking-[0.2em] text-red-400 mb-1">
+                  {relatedPost.category}
+                </p>
+                <h4 className="text-sm font-semibold text-zinc-50 hover:text-red-400">
+                  {relatedPost.title}
+                </h4>
+              </Link>
+            ))}
         </div>
-      </article>
-    </section>
-  </PageShell>
-);
+      </div>
+    </PageShell>
+  );
+};
 
 const AboutPage: React.FC = () => (
   <PageShell
@@ -515,6 +801,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/blog" element={<BlogPage />} />
+        <Route path="/blog/:slug" element={<BlogPostPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/terms" element={<TermsPage />} />

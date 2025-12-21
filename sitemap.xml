@@ -11,6 +11,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://insultbot.vercel.app/blog/seo-playbook</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2024-01-15</lastmod>
+  </url>
+  <url>
+    <loc>https://insultbot.vercel.app/blog/funny-roasts</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2024-01-10</lastmod>
+  </url>
+  <url>
     <loc>https://insultbot.vercel.app/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
