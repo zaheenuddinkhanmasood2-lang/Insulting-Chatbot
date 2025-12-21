@@ -11,16 +11,16 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://insultbot.vercel.app/blog/seo-playbook</loc>
+    <loc>https://insultbot.vercel.app/blog/ultimate-insult-chatbot</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2024-01-20</lastmod>
   </url>
   <url>
-    <loc>https://insultbot.vercel.app/blog/funny-roasts</loc>
+    <loc>https://insultbot.vercel.app/blog/web-based-insult-bot</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <lastmod>2024-01-10</lastmod>
+    <lastmod>2024-01-18</lastmod>
   </url>
   <url>
     <loc>https://insultbot.vercel.app/about</loc>
