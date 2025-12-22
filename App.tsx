@@ -242,7 +242,7 @@ const blogPosts: BlogPost[] = [
         <h3 className="text-xl font-semibold text-zinc-50 mt-6 mb-3">2. The Tinder Bio Review</h3>
         <div className="my-4 rounded-lg overflow-hidden border border-zinc-800">
           <img
-            src="https://media.istockphoto.com/id/1179599224/photo/robot-hand-show-middle-finger-on-blue-background.jpg?s=612x612&w=0&k=20&c=_jYAYLXnYCSqlhzoAo2t7Vd3G6zs4yD6eO2-jHyOocw="
+            src="https://media.istockphoto.com/id/946295840/photo/queen-cyborg-portrait.jpg?s=612x612&w=0&k=20&c=eDioa7JH27QcfVdPSUijlXUOI0XxR7O3vjEG2TqGjcw="
             alt="Dating app profile review with AI insult bot - Creative chatbot use case"
             className="w-full h-auto object-cover"
             loading="lazy"
@@ -256,7 +256,7 @@ const blogPosts: BlogPost[] = [
         <h3 className="text-xl font-semibold text-zinc-50 mt-6 mb-3">3. The "Code Review"</h3>
         <div className="my-4 rounded-lg overflow-hidden border border-zinc-800">
           <img
-            src="https://media.istockphoto.com/id/1179599224/photo/robot-hand-show-middle-finger-on-blue-background.jpg?s=612x612&w=0&k=20&c=_jYAYLXnYCSqlhzoAo2t7Vd3G6zs4yD6eO2-jHyOocw=
+            src="https://media.istockphoto.com/id/1179599224/photo/robot-hand-show-middle-finger-on-blue-background.jpg?s=612x612&w=0&k=20&c=_jYAYLXnYCSqlhzoAo2t7Vd3G6zs4yD6eO2-jHyOocw="
             alt="Developer code review with insult bot AI - Programming humor chatbot"
             className="w-full h-auto object-cover"
             loading="lazy"
