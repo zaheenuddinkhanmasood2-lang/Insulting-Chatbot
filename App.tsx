@@ -36,7 +36,7 @@ const blogPosts: BlogPost[] = [
       <>
         <div className="my-8 rounded-lg overflow-hidden border border-zinc-800">
           <img
-            src="https://media.istockphoto.com/id/644613898/photo/terrorism-in-the-future.jpg?s=2048x2048&w=is&k=20&c=yEftzz_sUkcSQE-eew7wowO0CLx1nNzEyAGI3RHLWzI="
+            src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=600&fit=crop&q=80"
             alt="AI chatbot with personality - Insult Bot AI entertainment"
             className="w-full h-auto object-cover"
             loading="lazy"
@@ -61,7 +61,7 @@ const blogPosts: BlogPost[] = [
         <h2 className="text-2xl font-bold text-zinc-50 mt-8 mb-4">What is an Insult Bot AI?</h2>
         <div className="my-6 rounded-lg overflow-hidden border border-zinc-800">
           <img
-            src="https://media.istockphoto.com/id/94735783/photo/alien-grey-female-creature.jpg?s=612x612&w=0&k=20&c=pDluHZkW2O6HBzl7NEhTLjqcQdCl_FHqeoDRGDJePsA="
+            src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=1200&h=600&fit=crop&q=80"
             alt="AI language model generating humorous responses - Insult chatbot technology"
             className="w-full h-auto object-cover"
             loading="lazy"
@@ -103,7 +103,7 @@ const blogPosts: BlogPost[] = [
         <h2 className="text-2xl font-bold text-zinc-50 mt-8 mb-4">How We Built the Fastest Roast Bot on Vercel</h2>
         <div className="my-6 rounded-lg overflow-hidden border border-zinc-800">
           <img
-            src="https://media.istockphoto.com/id/866933414/photo/robot-hand-showing-middle-finger-3d-rendering.webp?a=1&b=1&s=612x612&w=0&k=20&c=W39nBWTA_j9kYU55UEqYMQq9v4aWkVN3nmrnvVL6uZs="
+            src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&h=600&fit=crop&q=80"
             alt="Fast AI response speed - Vercel edge network performance for insult bot"
             className="w-full h-auto object-cover"
             loading="lazy"
@@ -171,7 +171,7 @@ const blogPosts: BlogPost[] = [
         <h2 className="text-2xl font-bold text-zinc-50 mt-8 mb-4">The Rise of the Web-Based Insult Bot</h2>
         <div className="my-6 rounded-lg overflow-hidden border border-zinc-800">
           <img
-            src="https://media.istockphoto.com/id/182003453/photo/devil-leaning-on-an-imaginary-object.jpg?s=612x612&w=0&k=20&c=HrcqOLIBtO4L0WHVbFTY7DjPICbwiNOQ6NwoNTa4SRY="
+            src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=600&fit=crop&q=80"
             alt="Fast browser-based AI chatbot - Instant loading insult bot on web"
             className="w-full h-auto object-cover"
             loading="lazy"
@@ -228,7 +228,7 @@ const blogPosts: BlogPost[] = [
         <h3 className="text-xl font-semibold text-zinc-50 mt-6 mb-3">1. The "Fantasy Football" Loser Punishment</h3>
         <div className="my-4 rounded-lg overflow-hidden border border-zinc-800">
           <img
-            src="https://media.istockphoto.com/id/476638482/photo/bad-robot.jpg?s=612x612&w=0&k=20&c=-iWMbtJ8ipVcXDHlYNlSwuO0HFOSEF4szNZFfJRcQDc="
+            src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&h=500&fit=crop&q=80"
             alt="Fantasy football group chat with insult bot AI - Fun roast generator use case"
             className="w-full h-auto object-cover"
             loading="lazy"
@@ -242,7 +242,7 @@ const blogPosts: BlogPost[] = [
         <h3 className="text-xl font-semibold text-zinc-50 mt-6 mb-3">2. The Tinder Bio Review</h3>
         <div className="my-4 rounded-lg overflow-hidden border border-zinc-800">
           <img
-            src="https://images.sh.com/photo-1521791136064-7986c2920216?w=800&h=500&fit=crop&q=80"
+            src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&h=500&fit=crop&q=80"
             alt="Dating app profile review with AI insult bot - Creative chatbot use case"
             className="w-full h-auto object-cover"
             loading="lazy"
@@ -256,7 +256,7 @@ const blogPosts: BlogPost[] = [
         <h3 className="text-xl font-semibold text-zinc-50 mt-6 mb-3">3. The "Code Review"</h3>
         <div className="my-4 rounded-lg overflow-hidden border border-zinc-800">
           <img
-            src="https://media.istockphoto.com/id/585509432/photo/angry-man.jpg?s=2048x2048&w=is&k=20&c=g09iJ5tbAqov-JFBMqBhXSWD-9a7gslV05ja9OG29H4="
+            src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=500&fit=crop&q=80"
             alt="Developer code review with insult bot AI - Programming humor chatbot"
             className="w-full h-auto object-cover"
             loading="lazy"
