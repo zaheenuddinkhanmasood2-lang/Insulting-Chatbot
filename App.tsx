@@ -323,7 +323,7 @@ const usePageSEO = (title: string, description: string, articleSchema?: any) => 
 const HomePage: React.FC = () => {
   usePageSEO(
     'Insult Chatbot: Free Brutal Insult Generator AI & Roast Maker',
-    'Destroy your friends with the #1 brutal insult generator(chatbot) AI. Insult Bot by Batmeez Bot unleashes savage roasts, witty comebacks, and brutal burns.'
+    'Insult Chatbot AI that generates savage roasts, witty comebacks, and brutal burns instantly. Try the free insult chatbot now for hilarious AI‑powered banter.'
   );
   const [isConnected, setIsConnected] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -688,7 +688,7 @@ const BlogPage: React.FC = () => {
       '@context': 'https://schema.org',
       '@type': 'Blog',
       'name': 'Insult Bot AI Blog',
-      'description': 'SEO tips, roast ideas, and strategies for insult bot AI applications',
+      'description': 'Insult Chatbot AI that generates savage roasts, witty comebacks, and brutal burns instantly. Try the free insult chatbot now for hilarious AI‑powered banter.',
       'url': 'https://insultbot.vercel.app/blog',
       'publisher': {
         '@type': 'Organization',
@@ -713,7 +713,7 @@ const BlogPage: React.FC = () => {
   return (
     <PageShell
       title="Insult Bot AI Blog | SEO Tips, Roast Ideas & Chatbot Strategies"
-      description="Discover SEO strategies, funny roast ideas, and content tips for insult bot AI applications. Learn how to rank your chatbot and drive traffic with expert blog posts."
+      description="Insult Chatbot AI that generates savage roasts, witty comebacks, and brutal burns instantly. Try the free insult chatbot now for hilarious AI‑powered banter."
       heading="Insult Bot AI Blog"
     >
       <p className="text-sm text-zinc-400 mb-6">
@@ -764,7 +764,7 @@ const BlogPostPage: React.FC = () => {
     return (
       <PageShell
         title="Blog Post Not Found | Insult Bot AI"
-        description="The blog post you're looking for doesn't exist."
+        description="Insult Chatbot AI that generates savage roasts, witty comebacks, and brutal burns instantly. Try the free insult chatbot now for hilarious AI‑powered banter."
         heading="Post Not Found"
       >
         <p className="text-sm text-zinc-300">
