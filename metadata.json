@@ -1,6 +1,6 @@
 {
-  "name": "Batmeez Bot",
-  "description": "An extremely rude and unhelpful AI voice assistant powered by Gemini Live API.",
+  "name": "Insult Chatbot",
+  "description": "Insult Chatbot AI that generates savage roasts, witty comebacks, and brutal burns instantly. Try the free insult chatbot now for hilarious AI‑powered banter.",
   "requestFramePermissions": [
     "microphone"
   ]
