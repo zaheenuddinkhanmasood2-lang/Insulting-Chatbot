@@ -328,6 +328,7 @@ const HomePage: React.FC = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isBotSpeaking, setIsBotSpeaking] = useState(false);
+  const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   // Refs for audio handling
   const inputAudioContextRef = useRef<AudioContext | null>(null);
@@ -567,75 +568,211 @@ const HomePage: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-between p-8 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-zinc-900 via-zinc-950 to-black">
+    <>
+      {/* Hero Section - Exactly 100vh */}
+      <div className="h-screen flex flex-col items-center justify-between p-8 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-zinc-900 via-zinc-950 to-black">
 
-      {/* Header */}
-      <header className="w-full max-w-2xl text-center space-y-2 mt-12">
-        <h1 className="text-5xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-red-500 to-red-900 uppercase drop-shadow-lg">
-          Batmeez Bot
-        </h1>
-        <p className="text-zinc-500 text-sm tracking-widest uppercase">
-          Extremely Rude • Unhelpful • Aggressive
-        </p>
-
-        {/* Simple nav to SEO pages */}
-        <nav className="mt-4 flex justify-center gap-4 text-xs text-zinc-500 uppercase tracking-wide">
-          <Link to="/blog" className="hover:text-red-400">Blog</Link>
-          <Link to="/about" className="hover:text-red-400">About</Link>
-          <Link to="/privacy" className="hover:text-red-400">Privacy</Link>
-          <Link to="/terms" className="hover:text-red-400">Terms</Link>
-          <Link to="/api-docs" className="hover:text-red-400">API</Link>
-        </nav>
-      </header>
-
-      {/* Main Interface */}
-      <main className="flex-1 flex flex-col items-center justify-center w-full max-w-lg relative">
-
-        <div className="absolute top-0 left-0 w-full h-full bg-red-900/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
-
-        <Visualizer isActive={isConnected} isSpeaking={isBotSpeaking} />
-
-        {error && (
-          <div className="mb-6 p-4 bg-red-950/50 border border-red-800 text-red-200 rounded-lg text-center text-sm max-w-xs">
-            Error: {error}
-          </div>
-        )}
-
-        <button
-          onClick={handleConnect}
-          disabled={!process.env.API_KEY}
-          className={`
-            group relative px-8 py-4 rounded-full font-bold text-lg tracking-wider transition-all duration-300
-            ${isConnected
-              ? 'bg-zinc-900 text-red-500 border-2 border-red-900 hover:bg-red-950 hover:border-red-700 shadow-[0_0_20px_rgba(127,29,29,0.4)]'
-              : 'bg-gradient-to-br from-red-600 to-red-900 text-white hover:scale-105 hover:shadow-[0_0_30px_rgba(220,38,38,0.5)]'
-            }
-            disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none
-          `}
-        >
-          {isConnected ? 'DISCONNECT (NIKLO)' : 'START CONVERSATION'}
-
-          {/* Hover glow effect */}
-          {!isConnected && (
-            <div className="absolute inset-0 rounded-full bg-red-500 blur-md opacity-0 group-hover:opacity-40 transition-opacity duration-300 -z-10"></div>
-          )}
-        </button>
-
-        {!process.env.API_KEY && (
-          <p className="mt-4 text-red-400 text-xs text-center max-w-xs">
-            System configuration error: API Key is missing from environment variables.
+        {/* Header */}
+        <header className="w-full max-w-2xl text-center space-y-2 mt-12">
+          <h1 className="text-5xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-red-500 to-red-900 uppercase drop-shadow-lg">
+            Insult Chatbot
+          </h1>
+          <p className="text-zinc-500 text-sm tracking-widest uppercase">
+            Extremely Rude • Unhelpful • Aggressive
           </p>
-        )}
 
-      </main>
+          {/* Simple nav to SEO pages */}
+          <nav className="mt-4 flex justify-center gap-4 text-xs text-zinc-500 uppercase tracking-wide">
+            <Link to="/blog" className="hover:text-red-400">Blog</Link>
+            <Link to="/about" className="hover:text-red-400">About</Link>
+            <Link to="/privacy" className="hover:text-red-400">Privacy</Link>
+            <Link to="/terms" className="hover:text-red-400">Terms</Link>
+            <Link to="/api-docs" className="hover:text-red-400">API</Link>
+          </nav>
+        </header>
 
-      {/* Footer Instructions */}
-      <footer className="w-full max-w-2xl text-center pb-8 opacity-40">
-        <p className="text-xs text-zinc-500 font-mono">
-          WARNING: THIS AI IS PROGRAMMED TO BE INSULTING. DO NOT USE IF SENSITIVE.
-        </p>
-      </footer>
-    </div>
+        {/* Main Interface */}
+        <main className="flex-1 flex flex-col items-center justify-center w-full max-w-lg relative">
+
+          <div className="absolute top-0 left-0 w-full h-full bg-red-900/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+
+          <Visualizer isActive={isConnected} isSpeaking={isBotSpeaking} />
+
+          {error && (
+            <div className="mb-6 p-4 bg-red-950/50 border border-red-800 text-red-200 rounded-lg text-center text-sm max-w-xs">
+              Error: {error}
+            </div>
+          )}
+
+          <button
+            onClick={handleConnect}
+            disabled={!process.env.API_KEY}
+            className={`
+              group relative px-8 py-4 rounded-full font-bold text-lg tracking-wider transition-all duration-300
+              ${isConnected
+                ? 'bg-zinc-900 text-red-500 border-2 border-red-900 hover:bg-red-950 hover:border-red-700 shadow-[0_0_20px_rgba(127,29,29,0.4)]'
+                : 'bg-gradient-to-br from-red-600 to-red-900 text-white hover:scale-105 hover:shadow-[0_0_30px_rgba(220,38,38,0.5)]'
+              }
+              disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none
+            `}
+          >
+            {isConnected ? 'DISCONNECT (NIKLO)' : 'START CONVERSATION'}
+
+            {/* Hover glow effect */}
+            {!isConnected && (
+              <div className="absolute inset-0 rounded-full bg-red-500 blur-md opacity-0 group-hover:opacity-40 transition-opacity duration-300 -z-10"></div>
+            )}
+          </button>
+
+          {!process.env.API_KEY && (
+            <p className="mt-4 text-red-400 text-xs text-center max-w-xs">
+              System configuration error: API Key is missing from environment variables.
+            </p>
+          )}
+
+        </main>
+
+        {/* Footer Instructions */}
+        <footer className="w-full max-w-2xl text-center pb-8 opacity-40">
+          <p className="text-xs text-zinc-500 font-mono">
+            WARNING: THIS AI IS PROGRAMMED TO BE INSULTING. DO NOT USE IF SENSITIVE.
+          </p>
+        </footer>
+      </div>
+
+      {/* SEO Content Section */}
+      <section className="bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 text-zinc-100 py-20 px-4 sm:px-6 lg:px-8 border-t border-zinc-800">
+        <div className="max-w-4xl mx-auto">
+          {/* Main Heading */}
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-red-500 to-red-600 mb-4">
+              About Insult Chatbot AI
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-transparent via-red-500 to-transparent mx-auto"></div>
+          </div>
+
+          {/* Content Cards */}
+          <div className="space-y-8 mb-16">
+            {/* Card 1 */}
+            <div className="bg-gradient-to-br from-zinc-900/80 to-zinc-800/50 backdrop-blur-sm rounded-2xl p-8 border border-zinc-700/50 shadow-xl hover:border-red-500/50 transition-all duration-300">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-red-500/20 to-red-600/20 flex items-center justify-center border border-red-500/30">
+                  <span className="text-2xl">🤖</span>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold text-zinc-50 mb-4">What is an Insult Chatbot?</h3>
+                  <p className="text-zinc-300 leading-relaxed text-lg">
+                    An insult chatbot is an AI-powered system designed to generate witty, sarcastic roasts and entertaining comebacks.
+                    Unlike traditional chatbots that aim to be helpful, an insult Chatbot AI prioritizes humor and personality,
+                    creating engaging interactions that are both funny and surprisingly creative.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="bg-gradient-to-br from-zinc-900/80 to-zinc-800/50 backdrop-blur-sm rounded-2xl p-8 border border-zinc-700/50 shadow-xl hover:border-red-500/50 transition-all duration-300">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-red-500/20 to-red-600/20 flex items-center justify-center border border-red-500/30">
+                  <span className="text-2xl">⚡</span>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold text-zinc-50 mb-4">How Does Insult Chatbot Technology Work?</h3>
+                  <p className="text-zinc-300 leading-relaxed text-lg mb-4">
+                    Modern insult chatbot systems use advanced language models trained on humor and banter. When you chat with
+                    an insult Chatbot AI, it analyzes your messages in real-time and generates contextually aware responses
+                    that balance creativity with entertainment.
+                  </p>
+                  <p className="text-zinc-300 leading-relaxed text-lg">
+                    The technology keeps evolving—newer models understand context better and adapt their roasting style based on
+                    your interactions, making each conversation unique and engaging.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="bg-gradient-to-br from-zinc-900/80 to-zinc-800/50 backdrop-blur-sm rounded-2xl p-8 border border-zinc-700/50 shadow-xl hover:border-red-500/50 transition-all duration-300">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-red-500/20 to-red-600/20 flex items-center justify-center border border-red-500/30">
+                  <span className="text-2xl">🎯</span>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold text-zinc-50 mb-4">Why Use an Insult AI Chatbot?</h3>
+                  <p className="text-zinc-300 leading-relaxed text-lg">
+                    While an insult Chatbot AI is primarily for entertainment, it's also used by content creators for social media,
+                    developers building interactive experiences, and educators teaching AI concepts. It's a fun way to explore
+                    how AI processes language and generates creative responses.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* FAQ Section */}
+          <div className="mt-16">
+            <div className="text-center mb-12">
+              <h3 className="text-3xl md:text-4xl font-bold text-zinc-50 mb-4">Frequently Asked Questions</h3>
+              <p className="text-zinc-400 text-lg">Got questions? Click to expand and find answers.</p>
+            </div>
+
+            <div className="space-y-4">
+              {[
+                {
+                  q: "What makes an insult chatbot different from regular chatbots?",
+                  a: "An insult Chatbot AI is specifically designed for entertainment and humor, generating witty roasts and sarcastic responses rather than providing helpful information. Unlike standard chatbots, insult AI Chatbot systems prioritize creativity and personality over utility, making them ideal for entertainment purposes."
+                },
+                {
+                  q: "Is it safe to use an insult chatbot?",
+                  a: "Yes, when used responsibly, an insult chatbot is safe for entertainment purposes. These systems are designed with content filters to prevent genuinely harmful content. However, users should remember that an insult Chatbot AI is meant for playful banter and should not be used to generate content that could be genuinely hurtful to others."
+                },
+                {
+                  q: "Can I customize an insult AI Chatbot's personality?",
+                  a: "Many insult chatbot platforms allow some degree of customization, letting users adjust the intensity and style of roasts. Advanced systems may learn from user interactions to better match preferred humor styles. The level of customization varies depending on the specific insult chatbot implementation."
+                },
+                {
+                  q: "How do developers create an insult chatbot?",
+                  a: "Creating an insult Chatbot AI requires expertise in natural language processing, machine learning, and conversational AI design. Developers typically fine-tune large language models on humor datasets, implement safety filters, and design conversation flows that maintain entertainment value while respecting ethical boundaries."
+                }
+              ].map((faq, index) => (
+                <div
+                  key={index}
+                  className="bg-gradient-to-br from-zinc-900/80 to-zinc-800/50 backdrop-blur-sm rounded-xl border border-zinc-700/50 overflow-hidden transition-all duration-300 hover:border-red-500/50"
+                >
+                  <button
+                    onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
+                    className="w-full px-6 py-5 flex items-center justify-between text-left group"
+                  >
+                    <span className="text-lg font-semibold text-zinc-50 pr-4 group-hover:text-red-400 transition-colors">
+                      {faq.q}
+                    </span>
+                    <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-red-500/20 flex items-center justify-center border border-red-500/30 group-hover:bg-red-500/30 transition-all">
+                      <svg
+                        className={`w-5 h-5 text-red-400 transition-transform duration-300 ${openFAQ === index ? 'rotate-45' : ''}`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                      </svg>
+                    </div>
+                  </button>
+                  {openFAQ === index && (
+                    <div className="px-6 pb-5 pt-0">
+                      <div className="pt-4 border-t border-zinc-700/50">
+                        <p className="text-zinc-300 leading-relaxed text-base">
+                          {faq.a}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 
@@ -653,7 +790,7 @@ const PageShell: React.FC<{ title: string; description: string; heading: string;
     <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col overflow-y-auto">
       <header className="px-6 py-4 border-b border-zinc-800 flex items-center justify-between flex-shrink-0">
         <Link to="/" className="text-sm font-bold tracking-widest uppercase text-red-500">
-          Batmeez Bot
+          Insult Chatbot
         </Link>
         <nav className="flex gap-4 text-xs text-zinc-400 uppercase">
           <Link to="/blog" className="hover:text-red-400">Blog</Link>
@@ -890,7 +1027,7 @@ const BlogPostPage: React.FC = () => {
           to="/"
           className="inline-flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition text-sm font-semibold"
         >
-          Try Batmeez Bot Now →
+          Try Insult Chatbot Now →
         </Link>
       </div>
 
@@ -922,12 +1059,12 @@ const BlogPostPage: React.FC = () => {
 
 const AboutPage: React.FC = () => (
   <PageShell
-    title="About Batmeez Bot | Rude Insult Bot AI"
+    title="About Batmeez Bot | Rude Insult Chatbot AI"
     description="Learn how Batmeez Bot works as a rude bot AI insult generator built for comedy and entertainment."
     heading="About This Rude Insult Bot AI"
   >
     <p className="text-sm leading-relaxed text-zinc-200">
-      Batmeez Bot is a deliberately rude AI chatbot designed for people who enjoy dark humor and
+      Batmeez ChatbotBot is a deliberately rude AI chatbot designed for people who enjoy dark humor and
       over‑the‑top roasts. Instead of giving polite answers, this insult bot focuses on sarcasm,
       spicy comebacks, and theatrical trash talk.
     </p>
