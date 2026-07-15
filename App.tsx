@@ -6,7 +6,7 @@ import {
   Link,
   useParams,
 } from 'react-router-dom';
-import { GoogleGenAI, LiveServerMessage, Modality } from '@google/genai';
+import { LiveServerMessage } from '@google/genai';
 import { encode, decode, decodeAudioData, createBlob } from './utils/audio';
 import { SYSTEM_INSTRUCTION, MODEL_NAME, VOICE_NAME } from './constants';
 import { Visualizer } from './components/Visualizer';
@@ -341,13 +341,24 @@ const HomePage: React.FC = () => {
 
   // Session ref
   const sessionPromiseRef = useRef<Promise<any> | null>(null);
+  const sessionIdRef = useRef<string | null>(null);
+  const eventSourceRef = useRef<EventSource | null>(null);
 
   // Cleanup function to stop audio and disconnect
   const disconnect = async () => {
     try {
-      if (sessionPromiseRef.current) {
-        const session = await sessionPromiseRef.current;
-        session.close();
+      // Close SSE connection
+      if (eventSourceRef.current) {
+        eventSourceRef.current.close();
+        eventSourceRef.current = null;
+      }
+
+      // Disconnect backend session
+      if (sessionIdRef.current) {
+        await fetch(`/api/chat?action=disconnect&sessionId=${sessionIdRef.current}`, {
+          method: 'POST',
+        }).catch(e => console.error("Error disconnecting backend:", e));
+        sessionIdRef.current = null;
       }
     } catch (e) {
       console.error("Error closing session:", e);
@@ -400,12 +411,6 @@ const HomePage: React.FC = () => {
     }
 
     try {
-      if (!process.env.API_KEY) {
-        throw new Error("API Key not found in environment variables.");
-      }
-
-      const genAI = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
       // Initialize Audio Contexts
       const AudioContext = (window as any).AudioContext || (window as any).webkitAudioContext;
 
@@ -453,22 +458,56 @@ const HomePage: React.FC = () => {
 
       nextStartTimeRef.current = 0;
 
-      // Start Gemini Session
-      sessionPromiseRef.current = genAI.live.connect({
-        model: MODEL_NAME,
-        config: {
-          responseModalities: [Modality.AUDIO],
-          speechConfig: {
-            voiceConfig: { prebuiltVoiceConfig: { voiceName: VOICE_NAME } },
-          },
-          systemInstruction: SYSTEM_INSTRUCTION,
-        },
-        callbacks: {
-          onopen: async () => {
+      // Connect to backend API
+      const connectResponse = await fetch('/api/chat?action=connect', {
+        method: 'POST',
+      });
+
+      const responseText = await connectResponse.text();
+      
+      if (!connectResponse.ok) {
+        let errorMessage = 'Failed to connect to backend';
+        if (responseText) {
+          try {
+            const errorData = JSON.parse(responseText);
+            errorMessage = errorData.error || errorMessage;
+          } catch (e) {
+            errorMessage = responseText || `Server returned ${connectResponse.status}`;
+          }
+        } else {
+          errorMessage = `Server returned ${connectResponse.status}. Make sure you're running 'npm run dev:vercel' for local development, or deploy to Vercel for production.`;
+        }
+        throw new Error(errorMessage);
+      }
+
+      if (!responseText) {
+        throw new Error('Empty response from server. Make sure the API route is properly configured and you\'re using "npm run dev:vercel" for local development.');
+      }
+
+      let sessionData;
+      try {
+        sessionData = JSON.parse(responseText);
+      } catch (e) {
+        throw new Error(`Invalid JSON response from server: ${responseText.substring(0, 100)}`);
+      }
+
+      const { sessionId } = sessionData;
+      sessionIdRef.current = sessionId;
+      console.log("Backend session created:", sessionId);
+
+      // Setup Server-Sent Events for receiving messages
+      const eventSource = new EventSource(`/api/chat?action=stream&sessionId=${sessionId}`);
+      eventSourceRef.current = eventSource;
+
+      eventSource.onmessage = async (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          
+          if (data.type === 'connected') {
             setIsConnected(true);
             console.log("Gemini Live Session Connected");
 
-            // Setup Input Pipeline (Mic -> Processor -> Gemini)
+            // Setup Input Pipeline (Mic -> Processor -> Backend API)
             if (!inputCtx) {
               throw new Error("Input audio context is not initialized.");
             }
@@ -484,17 +523,21 @@ const HomePage: React.FC = () => {
               const inputData = e.inputBuffer.getChannelData(0);
               const pcmBlob = createBlob(inputData);
 
-              if (sessionPromiseRef.current) {
-                sessionPromiseRef.current.then(session => {
-                  session.sendRealtimeInput({ media: pcmBlob });
-                });
+              // Send audio to backend
+              if (sessionIdRef.current) {
+                fetch(`/api/chat?action=send-audio&sessionId=${sessionIdRef.current}`, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ audioData: pcmBlob }),
+                }).catch(err => console.error('Error sending audio:', err));
               }
             };
 
             source.connect(scriptProcessor);
             scriptProcessor.connect(inputCtx.destination);
-          },
-          onmessage: async (message: LiveServerMessage) => {
+          } else if (data.type === 'message' && data.message) {
+            const message: LiveServerMessage = data.message;
+            
             // Handle Audio Response
             const parts = message.serverContent?.modelTurn?.parts;
             const base64Audio = parts && parts.length > 0 ? parts[0]?.inlineData?.data : undefined;
@@ -540,19 +583,26 @@ const HomePage: React.FC = () => {
               nextStartTimeRef.current = 0;
               setIsBotSpeaking(false);
             }
-          },
-          onclose: () => {
+          } else if (data.type === 'closed') {
             console.log("Session closed");
             setIsConnected(false);
             setIsBotSpeaking(false);
-          },
-          onerror: (e) => {
-            console.error("Session error", e);
-            setError("Connection error occurred.");
+            eventSource.close();
+          } else if (data.type === 'error') {
+            console.error("Session error:", data.error);
+            setError(data.error || "Connection error occurred.");
             disconnect();
           }
+        } catch (err) {
+          console.error("Error processing SSE message:", err);
         }
-      });
+      };
+
+      eventSource.onerror = (error) => {
+        console.error("EventSource error:", error);
+        setError("Connection error occurred.");
+        disconnect();
+      };
 
     } catch (err: any) {
       console.error(err);
@@ -606,14 +656,12 @@ const HomePage: React.FC = () => {
 
           <button
             onClick={handleConnect}
-            disabled={!process.env.API_KEY}
             className={`
               group relative px-8 py-4 rounded-full font-bold text-lg tracking-wider transition-all duration-300
               ${isConnected
                 ? 'bg-zinc-900 text-red-500 border-2 border-red-900 hover:bg-red-950 hover:border-red-700 shadow-[0_0_20px_rgba(127,29,29,0.4)]'
                 : 'bg-gradient-to-br from-red-600 to-red-900 text-white hover:scale-105 hover:shadow-[0_0_30px_rgba(220,38,38,0.5)]'
               }
-              disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none
             `}
           >
             {isConnected ? 'DISCONNECT (NIKLO)' : 'START CONVERSATION'}
@@ -623,12 +671,6 @@ const HomePage: React.FC = () => {
               <div className="absolute inset-0 rounded-full bg-red-500 blur-md opacity-0 group-hover:opacity-40 transition-opacity duration-300 -z-10"></div>
             )}
           </button>
-
-          {!process.env.API_KEY && (
-            <p className="mt-4 text-red-400 text-xs text-center max-w-xs">
-              System configuration error: API Key is missing from environment variables.
-            </p>
-          )}
 
         </main>
 
