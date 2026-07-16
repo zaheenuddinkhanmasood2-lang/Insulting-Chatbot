@@ -20,7 +20,7 @@ interface BlogPost {
   category: string;
   readTime: string;
   publishedDate: string;
-  keywords: string[];
+  keywords: string[]; 
 }
 
 const blogPosts: BlogPost[] = [
