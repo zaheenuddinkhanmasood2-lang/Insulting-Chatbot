@@ -16,7 +16,7 @@ interface BlogPost {
   slug: string;
   title: string;
   description: string;
-  content: React.ReactNode;
+  content: React.ReactNode;  
   category: string;
   readTime: string;
   publishedDate: string;
@@ -30,7 +30,7 @@ const blogPosts: BlogPost[] = [
     description: 'Looking for a laugh? Discover the funniest insult bot AI on the web. From witty comebacks to savage roasts, see why this insult chatbot is going viral.',
     category: 'Entertainment',
     readTime: '6 min read',
-    publishedDate: '2024-01-20',
+    publishedDate: '2026-01-20',
     keywords: ['insult bot AI', 'insult chatbot', 'funny insult bot', 'roast bot', 'entertainment AI'],
     content: (
       <>
@@ -151,7 +151,7 @@ const blogPosts: BlogPost[] = [
     description: 'Skip the App Store. Try the new insult bot AI that runs directly in your browser. Fast, free, and savage. Click to get roasted by the ultimate insult chatbot instantly.',
     category: 'Features',
     readTime: '5 min read',
-    publishedDate: '2024-01-18',
+    publishedDate: '2026-01-18',
     keywords: ['insult bot AI', 'web-based chatbot', 'roast generator', 'no app download', 'browser AI'],
     content: (
       <>
