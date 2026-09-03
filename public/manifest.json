@@ -1,0 +1,24 @@
+{
+    "name": "Insult Chatbot: Free Brutal Insult Generator AI & Roast AI",
+    "short_name": "InsultBot",
+    "description": "Insult Chatbot AI that generates savage roasts, witty comebacks, and brutal burns instantly. Try the free insult chatbot now for hilarious AI‑powered banter.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#18181b",
+    "theme_color": "#18181b",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/favicon.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": [
+        "entertainment",
+        "utilities"
+    ],
+    "lang": "en",
+    "dir": "ltr"
+}

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://insult-chatbot.vercel.app/sitemap.xml
+
+
