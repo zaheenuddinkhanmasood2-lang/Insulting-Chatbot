@@ -10,6 +10,7 @@ import { GoogleGenAI, LiveServerMessage, Modality } from '@google/genai';
 import { encode, decode, decodeAudioData, createBlob } from '../utils/audio';
 import { SYSTEM_INSTRUCTION, MODEL_NAME, VOICE_NAME } from '../constants';
 import { Visualizer } from '../components/Visualizer';
+import InstallPrompt from '../components/InstallPrompt';
 
 // Cookie Consent Banner Component
 const CookieConsentBanner: React.FC = () => {
@@ -995,6 +996,9 @@ const HomePage: React.FC = () => {
 
   const handleConnect = async () => {
     setError(null);
+
+    // Mark user as engaged for install prompt
+    localStorage.setItem('user-engaged', 'true');
 
     if (isConnected) {
       await disconnect();
@@ -3052,6 +3056,7 @@ const App: React.FC = () => {
     <BrowserRouter>
       <>
         <CookieConsentBanner />
+        <InstallPrompt />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/blog" element={<BlogPage />} />
